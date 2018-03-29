@@ -12,8 +12,6 @@ int main(){
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(120);
 	sf::Font font;
-	font.loadFromFile("assets/DejaVuSans.ttf");
-	sf::Text text("Welcome to CSPaint!", font, 30);
 	window.clear(sf::Color::White);
 	vector<sf::CircleShape> art;
 
