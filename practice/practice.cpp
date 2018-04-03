@@ -1,9 +1,6 @@
 // practice.cpp
 // created 3/30/2018 by TB
-// this program is a test drive for 5 students working on one project using git
-// for practice only
-// add some code and edit the file if you want to get familiar with git
-// also checking for compatibility issues
+// this program is for testing out git and checking compatibility issues
 
 #include <iostream>
 using std::cout;
