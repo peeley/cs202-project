@@ -1,0 +1,20 @@
+
+!README!
+File to keep track of where project currently is. As items are completed, 
+check the file off by changing the "-" to a "+" so members know what is done and what is not.
+Also write what we're working on in the space "Who's Doing What?", to make sure that
+we don't write the same thing twice.
+!README!
+
+Functions & Goals (Order of Importance):
+ - Make different tool types including line tool, brush, shape maker, etc.
+ - Create UI that allows for buttons to select tools
+ - Color picker, chooses stroke color of current tool
+ - Save image to image file
+ - Flipbook-style animation
+
+Bug Fixes Needed:
+ - Ensure compatibility across platforms (ongoing)
+ - Fix brush painting problem (line of dots rather than smooth curve)
+
+Who's Doing What?: 
