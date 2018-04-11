@@ -7,6 +7,9 @@ class Frame{
 	public:
 		Frame();
 		std::vector<sf::CircleShape>& getObjects();
+		void clearObjects();
+		void addObject(sf::CircleShape&);
+		void drawObjects(sf::RenderWindow&);
 	private:
-		std::vector<sf::CircleShape> objects();
+		std::vector<sf::CircleShape> _objects;
 };
