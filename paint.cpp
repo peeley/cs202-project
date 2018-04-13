@@ -2,6 +2,7 @@
 #include <vector>
 #include "Application.hpp"
 #include "DotTool.hpp"
+#include "EraserTool.hpp"
 
 using std::vector;
 
@@ -11,6 +12,7 @@ int main(){
 	window.setFramerateLimit(120);
 	Application app(window);
 	DotTool dot(app.getWindow());
+	EraserTool eraser(app.getWindow());
 	app.setTool(&dot);
 	while(window.isOpen()){
 		window.clear(sf::Color::White);
@@ -23,12 +25,11 @@ int main(){
 			if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 				app.getTool()->paintTick(app.getCurrentFrame(), app.getColor());
 			}
+			if(event.type == sf::Event::MouseWheelScrolled){
+				app.getTool()->scrollAction(event);
+			}
 			if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
-				sf::CircleShape circle(10);
-				sf::Vector2i position = sf::Mouse::getPosition(app.getWindow());
-				circle.setPosition(position.x, position.y);
-				circle.setFillColor(sf::Color::White);
-				app.addToFrame(circle);	
+				eraser.paintTick(app.getCurrentFrame(), sf::Color::White);	
 			}
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
 				app.clearCurrentFrame();

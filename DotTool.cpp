@@ -9,10 +9,20 @@ void DotTool::paintTick(Frame& f, sf::Color c) const {
 	// a 'new' CircleShape, otherwise circle is deleted when program leaves scope and
 	// _objects has a pointer pointing to a deleted variable.
 	sf::CircleShape* circle;
-	circle = new sf::CircleShape(5);
+	circle = new sf::CircleShape(_dotRadius);
 	sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
 	circle->setPosition(position.x, position.y);
 	circle->setFillColor(c);
 	f.addObject(*circle);
 	std::cout << "Dot added at (" << position.x <<","<< position.y << ")" << std::endl;
+}
+void DotTool::scrollAction(sf::Event& e){
+	if(e.mouseWheelScroll.delta > 0 && _dotRadius < 50){
+		_dotRadius += 5;
+		std::cout << "Dot size increased to: " << _dotRadius << " px." << std::endl;
+	}
+	else if(e.mouseWheelScroll.delta < 0 && _dotRadius > 5){
+		_dotRadius -= 5;
+		std::cout << "Dot size decreased to: " << _dotRadius << " px." << std::endl;
+	}
 }

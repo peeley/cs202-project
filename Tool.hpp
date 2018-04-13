@@ -9,6 +9,7 @@
 class Tool{
 	public:
 		virtual void paintTick(Frame&, sf::Color) const = 0;
+		virtual void scrollAction(sf::Event&) = 0;
 		Tool(sf::RenderWindow&);
 		sf::RenderWindow& getWindow() const;
 		virtual ~Tool();
