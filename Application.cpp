@@ -32,18 +32,16 @@ sf::Color Application::getColor(){
 	return _currentColor;
 }
 
-void Application::setTool(){
-	// TODO
-	;
+void Application::setTool(Tool* t){
+	_currentTool = t;
 }
 
-/*
-Tool Application::getTool(){
-	// TODO
-	;
+
+Tool* Application::getTool(){
+	return _currentTool;
 }
-*/
-sf::RenderWindow& Application::getWindow(){
+
+sf::RenderWindow& Application::getWindow() const{
 	return _window;
 }
 
@@ -51,11 +49,15 @@ void Application::clearCurrentFrame(){
 	_frames[_currentFrameIndex].clearObjects();
 	cout << "Clearing frame " << _currentFrameIndex << endl;
 }
-void Application::addToFrame(sf::CircleShape& s){
-	_frames[_currentFrameIndex].addObject(s);
+void Application::addToFrame(sf::Drawable& d){
+	_frames[_currentFrameIndex].addObject(d);
+}
+Frame& Application::getCurrentFrame(){
+	return _frames[_currentFrameIndex];
 }
 void Application::close(){
 	_window.close();
+	cout << "App exiting" << endl;
 }
 void Application::display(){
 	_window.display();
@@ -63,3 +65,4 @@ void Application::display(){
 Application::Application(sf::RenderWindow& window):_window{window}{
 	createNewFrame();
 }
+

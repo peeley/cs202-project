@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Application.hpp"
+#include "DotTool.hpp"
 
 using std::vector;
 
@@ -9,7 +10,8 @@ int main(){
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(120);
 	Application app(window);
-	
+	DotTool dot(app.getWindow());
+	app.setTool(&dot);
 	while(window.isOpen()){
 		window.clear(sf::Color::White);
 		sf::Event event;
@@ -19,11 +21,7 @@ int main(){
 				app.close();
 			}
 			if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-				sf::CircleShape circle(5);
-				sf::Vector2i position = sf::Mouse::getPosition(app.getWindow());
-				circle.setFillColor(sf::Color::Black);
-				circle.setPosition(position.x, position.y);
-				app.addToFrame(circle);
+				app.getTool()->paintTick(app.getCurrentFrame(), app.getColor());
 			}
 			if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
 				sf::CircleShape circle(10);

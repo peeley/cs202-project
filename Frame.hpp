@@ -3,13 +3,16 @@
 */
 #include <SFML/Graphics.hpp>
 #include <vector>
+#ifndef FRAME_HPP_
+#define FRAME_HPP_
 class Frame{
 	public:
 		Frame();
-		std::vector<sf::CircleShape>& getObjects();
+		std::vector<sf::Drawable*>& getObjects();
 		void clearObjects();
-		void addObject(sf::CircleShape&);
+		void addObject(sf::Drawable&);
 		void drawObjects(sf::RenderWindow&);
 	private:
-		std::vector<sf::CircleShape> _objects;
+		std::vector<sf::Drawable*> _objects;
 };
+#endif

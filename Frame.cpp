@@ -12,14 +12,14 @@ Frame::Frame(){
 void Frame::clearObjects(){
 	_objects.clear();
 }
-void Frame::addObject(sf::CircleShape& s){
-	_objects.push_back(s);
+void Frame::addObject(sf::Drawable& s){
+	_objects.push_back(&s);
 }
-vector<sf::CircleShape>& Frame::getObjects(){
+vector<sf::Drawable*>& Frame::getObjects(){
 	return _objects;
 }
 void Frame::drawObjects(sf::RenderWindow& window){
-	for(int i = 0; i < _objects.size(); ++i){
-		window.draw(_objects[i]);
+	for(auto i:_objects){
+		window.draw(*i);
 	}
 }
