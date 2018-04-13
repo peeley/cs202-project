@@ -11,18 +11,21 @@ void Application::drawCurrentFrame(){
 	_frames[_currentFrameIndex].drawObjects(_window);
 }
 void Application::cycleNextFrame(){
-	if(_currentFrameIndex != _frames.size()){
+	if(_currentFrameIndex < _frames.size()-1){
 		++_currentFrameIndex;
+		cout << "Cycled to next frame #" << _currentFrameIndex << endl;
 	}
 }
 void Application::cycleLastFrame(){
-	if(_currentFrameIndex != 0){
+	if(_currentFrameIndex > 0){
 		--_currentFrameIndex;
+		cout << "Cycled to previous frame #" << _currentFrameIndex << endl;
 	}
 }
 void Application::createNewFrame(){
 	Frame f;
 	_frames.push_back(f);
+	cout << _frames.size() << " total frames"<< endl;
 }
 void Application::setColor(sf::Color c){
 	_currentColor = c;

@@ -9,7 +9,7 @@ using std::vector;
 int main(){
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "CSPaint");
 	window.setVerticalSyncEnabled(true);
-	window.setFramerateLimit(120);
+	//window.setFramerateLimit(120);
 	Application app(window);
 	DotTool dot(app.getWindow());
 	EraserTool eraser(app.getWindow());
@@ -33,6 +33,15 @@ int main(){
 			}
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
 				app.clearCurrentFrame();
+			}
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)){
+				app.createNewFrame();
+			}
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+				app.cycleLastFrame();
+			}
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+				app.cycleNextFrame();
 			}
 		}
 		app.drawCurrentFrame();
