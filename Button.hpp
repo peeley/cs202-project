@@ -8,6 +8,8 @@ CS-Paint
 #ifndef FILE_BUTTON_HPP
 #define FILE_BUTTON_HPP
 
+//time delay function//
+void delayTime(sf::Clock clock, float seconds);
 
 class Button 
 {
@@ -49,5 +51,6 @@ private:
 	sf::Text _text;
 	sf::Font _font;	
 	_ButtonType _type;
+	bool _isPressed;
 };
 #endif // !FILE_BUTTON_HPP

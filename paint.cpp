@@ -7,7 +7,7 @@
 
 using std::vector;
 
-int main(){
+int main() {
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "CSPaint");
 	window.setVerticalSyncEnabled(true);
 	//window.setFramerateLimit(120);
@@ -19,7 +19,7 @@ int main(){
 
 	//////////make a button////////////
 	vector<Button> buttons;
-	Button button(136, 60, 0, 0, "button_not_pressed1.png", "button_pressed.png", Button::AUTO_TOGGLE, "File");
+	Button button(136, 60, 0, 0, "button_not_pressed1.png", "button_pressed.png", Button::CLICK_ON_CLICK_OFF, "File");
 	Button button2(136, 60, 150, 0, "button_not_pressed1.png", "button_pressed.png", Button::AUTO_TOGGLE, "Home");
 	Button button3(136, 60, 300, 0, "button_not_pressed1.png", "button_pressed.png", Button::AUTO_TOGGLE, "View");
 	buttons.push_back(button);
@@ -27,33 +27,33 @@ int main(){
 	buttons.push_back(button3);
 
 
-	while(window.isOpen()){
+	while (window.isOpen()) {
 		window.clear(sf::Color::White);
 		sf::Event event;
-		while(window.pollEvent(event)){
-			if(event.type == sf::Event::Closed ||
-				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				app.close();
 			}
-			if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				app.getTool()->paintTick(app.getCurrentFrame(), app.getColor());
 			}
-			if(event.type == sf::Event::MouseWheelScrolled){
+			if (event.type == sf::Event::MouseWheelScrolled) {
 				app.getTool()->scrollAction(event);
 			}
-			if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
-				eraser.paintTick(app.getCurrentFrame(), sf::Color::White);	
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+				eraser.paintTick(app.getCurrentFrame(), sf::Color::White);
 			}
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				app.clearCurrentFrame();
 			}
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)){
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
 				app.createNewFrame();
 			}
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				app.cycleLastFrame();
 			}
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 				app.cycleNextFrame();
 			}
 		}
