@@ -3,6 +3,7 @@
 #include "Application.hpp"
 #include "DotTool.hpp"
 #include "EraserTool.hpp"
+#include "Button.hpp"
 
 using std::vector;
 
@@ -14,6 +15,18 @@ int main(){
 	DotTool dot(app.getWindow());
 	EraserTool eraser(app.getWindow());
 	app.setTool(&dot);
+
+
+	//////////make a button////////////
+	vector<Button> buttons;
+	Button button(136, 60, 0, 0, "button_not_pressed1.png", "button_pressed.png", Button::AUTO_TOGGLE, "File");
+	Button button2(136, 60, 150, 0, "button_not_pressed1.png", "button_pressed.png", Button::AUTO_TOGGLE, "Home");
+	Button button3(136, 60, 300, 0, "button_not_pressed1.png", "button_pressed.png", Button::AUTO_TOGGLE, "View");
+	buttons.push_back(button);
+	buttons.push_back(button2);
+	buttons.push_back(button3);
+
+
 	while(window.isOpen()){
 		window.clear(sf::Color::White);
 		sf::Event event;
@@ -45,6 +58,14 @@ int main(){
 			}
 		}
 		app.drawCurrentFrame();
+
+		button.setTexture(button.isPressed(window));
+		button.draw(window);
+		button2.setTexture(button2.isPressed(window));
+		button2.draw(window);
+		button3.setTexture(button3.isPressed(window));
+		button3.draw(window);
+
 		app.display();
 	}
 }
