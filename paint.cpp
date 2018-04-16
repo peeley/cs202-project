@@ -19,9 +19,9 @@ int main() {
 
 	//////////make a button////////////
 	vector<Button> buttons;
-	Button button(136, 60, 0, 0, "button_not_pressed1.png", "button_pressed.png", Button::CLICK_ON_CLICK_OFF, "File");
-	Button button2(136, 60, 150, 0, "button_not_pressed1.png", "button_pressed.png", Button::AUTO_TOGGLE, "Home");
-	Button button3(136, 60, 300, 0, "button_not_pressed1.png", "button_pressed.png", Button::AUTO_TOGGLE, "View");
+	Button button(136, 60, 0, 0, "button_not_pressed1.png", "button_pressed.png", "button_hover.png", Button::CLICK_ON_CLICK_OFF, " File");
+	Button button2(136, 60, 150, 0, "button_not_pressed1.png", "button_pressed.png", "button_hover.png", Button::AUTO_TOGGLE, "Home");
+	Button button3(136, 60, 300, 0, "button_not_pressed1.png", "button_pressed.png","button_hover.png" ,Button::AUTO_TOGGLE, "View");
 	buttons.push_back(button);
 	buttons.push_back(button2);
 	buttons.push_back(button3);
@@ -59,11 +59,11 @@ int main() {
 		}
 		app.drawCurrentFrame();
 
-		button.setTexture(button.isPressed(window));
+		button.setTexture(button.getButtonState(window));
 		button.draw(window);
-		button2.setTexture(button2.isPressed(window));
+		button2.setTexture(button2.getButtonState(window));
 		button2.draw(window);
-		button3.setTexture(button3.isPressed(window));
+		button3.setTexture(button3.getButtonState(window));
 		button3.draw(window);
 
 		app.display();

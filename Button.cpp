@@ -6,20 +6,19 @@ CS-Paint
 #include "Button.hpp"
 #include <string>
 using std::string;
-#include <iostream> //////////////////////////////////////////just for debugging
-using std::cout;
-using std::endl;
 #include <SFML/System/Clock.hpp>
 
 
 //constructor with no text//
-Button::Button(float width, float length, float xPos, float yPos, const string &imagePathNotPressed, const string &imagePathPressed, _ButtonType type)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _type{ type }
+Button::Button(float width, float length, float xPos, float yPos, const string &imagePathNotPressed, const string &imagePathPressed, const std::string &imagePathHover, _ButtonType type)
+	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }
 {
 	if (!_texture.loadFromFile(_imagePathNotPressed)) //set initial button state to not pressed
 	{
 		// error...
 	}
+	_pressed = false;
+	_state = NOT_PRESSED;
 	_texture.setSmooth(true);
 	_sprite.setTexture(_texture);
 	_sprite.setOrigin(0, 0);
@@ -28,14 +27,15 @@ Button::Button(float width, float length, float xPos, float yPos, const string &
 }
 
 //constructor with text, but not font or font color.//
-Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, _ButtonType type, const std::string &text)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _type{ type }
+Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text)
+	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }
 {
 	if (!_texture.loadFromFile(_imagePathNotPressed)) //set initial button state to not pressed
 	{
 		// error...
 	}
-	_isPressed = false;
+	_pressed = false;
+	_state = NOT_PRESSED;
 	_texture.setSmooth(true);
 	_sprite.setTexture(_texture);
 	_sprite.setPosition(xPos, yPos);
@@ -48,13 +48,15 @@ Button::Button(float length, float width, float xPos, float yPos, const std::str
 }
 
 //constructor with text and font but no font color//
-Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, _ButtonType type, const std::string &text, const sf::Font &font)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _type{ type }, _font{ font }
+Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text, const sf::Font &font)
+	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }, _font{ font }
 {
 
 	if (!_texture.loadFromFile(_imagePathNotPressed)) { //set initial button state to not pressed
 		// error...
 	}
+	_pressed = false;
+	_state = NOT_PRESSED;
 	_sprite.setPosition(xPos, yPos);
 	_text.setPosition(_position.x, _position.y);
 	_texture.setSmooth(true);
@@ -66,13 +68,17 @@ Button::Button(float length, float width, float xPos, float yPos, const std::str
 }
 
 //constructor with text, font, and font color//
-Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, _ButtonType type, const std::string &text, sf::Font font, sf::Color textColor)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _type{ type }, _font{ font }
+Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text, sf::Font font, sf::Color textColor)
+	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type {
+	type
+}, _font{ font }
 {
 	if (!_texture.loadFromFile(_imagePathNotPressed)) //set initial button state to not pressed
 	{
 		// error...
 	}
+	_pressed = false;
+	_state = NOT_PRESSED;
 	_texture.setSmooth(true);
 	_sprite.setTexture(_texture);
 	_sprite.setPosition(xPos, yPos);
@@ -83,13 +89,11 @@ Button::Button(float length, float width, float xPos, float yPos, const std::str
 
 //delay time... some buttons are a little too responsive. 
 void delayTime(sf::Clock clock, float seconds) {
-	////clock.restart();
 	sf::Time elapsed = clock.getElapsedTime();
 	sf::Time delay = sf::seconds(seconds);
 	while (elapsed < delay)
 	{
 		elapsed = clock.getElapsedTime();
-		cout << elapsed.asSeconds() << endl;
 	}
 }
 
@@ -103,7 +107,7 @@ sf::Vector2f Button::getSize() {
 }
 
 //returns true if button is pressed, false if it's not.//  
-bool Button::isPressed(const sf::RenderWindow &window) {
+Button::_ButtonState Button::getButtonState(const sf::RenderWindow &window) {
 	sf::Vector2f mousePointRelativeToWorld;
 	//Get the mouse position:
 	sf::Vector2i mouse = sf::Mouse::getPosition(window);
@@ -113,33 +117,62 @@ bool Button::isPressed(const sf::RenderWindow &window) {
 	if (_type == CLICK_ON_CLICK_OFF) {
 		sf::Clock clock;
 		if (_text.getString() == "") {
-			if (_isPressed  && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			if (_state == PRESSED  && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-				_isPressed = false;
+				_pressed = false;
+				_state = NOT_PRESSED;
 			}
-			if (!_isPressed  && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			else if (_state == (HOVER || NOT_PRESSED)  && !_pressed && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-				_isPressed = true;
+				_pressed = true;
+				_state = PRESSED;
+				delayTime(clock, 0.1);
 			}
-
+			else if (_state == NOT_PRESSED && !_pressed && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
+				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
+				_state = HOVER;
+				delayTime(clock, 0.1);
+			}
+			else if (_state == HOVER && !_pressed &&
+				(!(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) ||
+				!(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y))){
+				_state = NOT_PRESSED;
+				delayTime(clock, 0.1);
+			}
 		}
+		
 		else { //if there is text
-			if (_isPressed && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			if (_state == PRESSED && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
-				_isPressed = false;
-				delayTime(clock, 0.1);
+				_pressed = false;
+				_state = NOT_PRESSED;
 			}
-			else if (!_isPressed && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			else if (_state == (HOVER || NOT_PRESSED) && !_pressed && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
-				_isPressed = true;
+				_pressed = true;
+				_state = PRESSED;
 				delayTime(clock, 0.1);
 			}
+			else if (_state == NOT_PRESSED && !_pressed && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
+				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
+				_state = HOVER;
+				delayTime(clock, 0.1);
+			}
+			else if (_state == HOVER && !_pressed &&
+				(!(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) ||
+					!(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x))) {
+				_state = NOT_PRESSED;
+				delayTime(clock, 0.1);
+			}
+			
 		}
-		return _isPressed;
+		return _state;
 	}
 
 	if (_type == AUTO_TOGGLE) {
@@ -147,36 +180,52 @@ bool Button::isPressed(const sf::RenderWindow &window) {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-				return true;
+				return PRESSED;
+			}
+			if (_state == NOT_PRESSED && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
+				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
+				return HOVER;
 			}
 			else {
-				return false;
+				return NOT_PRESSED;
 			}
 		}
-		else {
+		else {//if there is text
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
-				return true;
+				return PRESSED;
+			}
+			if (_state == NOT_PRESSED && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
+				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
+				return HOVER;
 			}
 			else {
-				return false;
+				return NOT_PRESSED;
 			}
 		}
 	}
 }
 
 //sets button texture based on pressed/not pressed status//
-void Button::setTexture(bool isPressed) {
+void Button::setTexture(Button::_ButtonState state) {
 
-	if (isPressed) {
+	if (state == PRESSED) {
 		_texture.loadFromFile(_imagePathPressed);
 		{
 			// catch error...
 		}
 	}
-	else {
+	if (state == NOT_PRESSED) {
 		_texture.loadFromFile(_imagePathNotPressed);
+		{
+			//catch error...
+		}
+	}
+	if (state == HOVER) {
+		_texture.loadFromFile(_imagePathHover);
 		{
 			//catch error...
 		}
