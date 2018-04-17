@@ -7,6 +7,10 @@ CS-Paint
 #include <string>
 using std::string;
 #include <SFML/System/Clock.hpp>
+#include<vector>
+using std::vector;
+#include<queue>
+using std::queue;
 
 
 //constructor with no text//
@@ -27,8 +31,10 @@ Button::Button(float width, float length, float xPos, float yPos, const string &
 }
 
 //constructor with text, but not font or font color.//
-Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }
+Button::Button(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text)
+	: _size{ width, length }, _position{ xPos, yPos }, _pressed{ pressed }, _imagePathNotPressed {
+	imagePathNotPressed
+}, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }
 {
 	if (!_texture.loadFromFile(_imagePathNotPressed)) //set initial button state to not pressed
 	{
@@ -44,6 +50,7 @@ Button::Button(float length, float width, float xPos, float yPos, const std::str
 	_text.setFont(_font);
 	_text.setFillColor(sf::Color::Black);
 	_text.setString(text);
+	_text.scale({ 0.5, 0.5 });
 
 }
 
@@ -53,7 +60,7 @@ Button::Button(float length, float width, float xPos, float yPos, const std::str
 {
 
 	if (!_texture.loadFromFile(_imagePathNotPressed)) { //set initial button state to not pressed
-		// error...
+														// error...
 	}
 	_pressed = false;
 	_state = NOT_PRESSED;
@@ -64,12 +71,13 @@ Button::Button(float length, float width, float xPos, float yPos, const std::str
 	_text.setFont(font);
 	_text.setFillColor(sf::Color::Black);
 	_text.setString(text);
+	_text.scale({ 0.5, 0.5 });
 
 }
 
 //constructor with text, font, and font color//
 Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text, sf::Font font, sf::Color textColor)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type {
+	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{
 	type
 }, _font{ font }
 {
@@ -85,6 +93,7 @@ Button::Button(float length, float width, float xPos, float yPos, const std::str
 	_text.setFont(_font);
 	_text.setFillColor(textColor);
 	_text.setString(text);
+	_text.scale({ 0.5, 0.5 });
 }
 
 //delay time... some buttons are a little too responsive. 
@@ -106,24 +115,112 @@ sf::Vector2f Button::getSize() {
 	return _size;
 }
 
+sf::Text Button::getText() {
+	return _text;
+}
+
+Button::_ButtonState Button::getState() {
+	return _state;
+}
+
+bool Button::getPressed() {
+	return _pressed;
+}
+
 //returns true if button is pressed, false if it's not.//  
-Button::_ButtonState Button::getButtonState(const sf::RenderWindow &window) {
+Button::_ButtonState Button::getButtonState(const sf::RenderWindow &window, sf::Vector2i menuSize, sf::Vector2i menuPosition) {
 	sf::Vector2f mousePointRelativeToWorld;
 	//Get the mouse position:
 	sf::Vector2i mouse = sf::Mouse::getPosition(window);
 	//Map Pixel to Coords:
 	sf::Vector2f mouse_world = window.mapPixelToCoords(mouse);
 
+	if (_type == OFF_BY_CLICK_ANOTHER) {
+
+		if ((mouse_world.x > menuPosition.x && mouse_world.x < menuPosition.x + menuSize.x) &&
+			(mouse_world.y > menuPosition.y && mouse_world.y < menuPosition.y + menuSize.y)) {
+			sf::Clock clock; //////////////////////////make member variable
+			///*if (_text.getString() == "") {
+			//	if (_state == PRESSED  && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			//		(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
+			//		(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
+			//		_pressed = false;
+			//		_state = NOT_PRESSED;
+			//	}
+			//	else if (_state == PRESSED && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			//		(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
+			//		(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
+			//		_pressed = false;
+			//		_state = NOT_PRESSED;
+			//	}
+			//	else if (_state == (HOVER || NOT_PRESSED) && !_pressed && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			//		(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
+			//		(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
+			//		_pressed = true;
+			//		_state = PRESSED;
+			//		delayTime(clock, 0.1);
+			//	}
+			//	else if (_state == NOT_PRESSED && !_pressed && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			//		(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
+			//		(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
+			//		_state = HOVER;
+			//		delayTime(clock, 0.1);
+			//	}
+			//	else if (_state == HOVER && !_pressed &&
+			//		(!(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) ||
+			//			!(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y))) {
+			//		_state = NOT_PRESSED;
+			//		delayTime(clock, 0.1);
+			//	}
+			//}*/
+
+		//	else { //if there is text
+
+			//turn off button if another is pressed
+			if (_state == HOVER /*&& !_pressed*/ && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
+				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
+				_pressed = true;
+				_state = PRESSED;
+				//delayTime(clock, 0.1);
+			}
+			if (_state == PRESSED && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+				(!(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) ||
+					!(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x))) {
+				_pressed = false;
+				_state = NOT_PRESSED;
+				//delayTime(clock, 0.1);
+			}
+			
+			else if(_state == NOT_PRESSED && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
+				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
+				_pressed = false;
+				_state = HOVER;
+				//delayTime(clock, 0.1);
+			}
+			else if (_state == HOVER && /*!_pressed &&*/ !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+				(!(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) ||
+					!(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x))) {
+				//_pressed = false;
+				_state = NOT_PRESSED;
+			}
+			return _state;
+		}
+		else
+			return _state;
+	}
+
 	if (_type == CLICK_ON_CLICK_OFF) {
 		sf::Clock clock;
 		if (_text.getString() == "") {
-			if (_state == PRESSED  && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			if (_state == PRESSED && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
 				_pressed = false;
 				_state = NOT_PRESSED;
 			}
-			else if (_state == (HOVER || NOT_PRESSED)  && !_pressed && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+			else if (_state == (HOVER || NOT_PRESSED) && !_pressed && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
 				_pressed = true;
@@ -138,12 +235,12 @@ Button::_ButtonState Button::getButtonState(const sf::RenderWindow &window) {
 			}
 			else if (_state == HOVER && !_pressed &&
 				(!(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) ||
-				!(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y))){
+					!(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y))) {
 				_state = NOT_PRESSED;
 				delayTime(clock, 0.1);
 			}
 		}
-		
+
 		else { //if there is text
 			if (_state == PRESSED && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
@@ -170,7 +267,7 @@ Button::_ButtonState Button::getButtonState(const sf::RenderWindow &window) {
 				_state = NOT_PRESSED;
 				delayTime(clock, 0.1);
 			}
-			
+
 		}
 		return _state;
 	}
@@ -209,6 +306,20 @@ Button::_ButtonState Button::getButtonState(const sf::RenderWindow &window) {
 	}
 }
 
+//set button position
+void Button::setPosition(sf::Vector2i position) {
+	_position = position;
+}
+
+void Button::setPressed(bool pressed) {
+	_pressed = pressed;
+}
+
+//set button state
+void Button::setState(Button::_ButtonState state) {
+	_state = state;
+}
+
 //sets button texture based on pressed/not pressed status//
 void Button::setTexture(Button::_ButtonState state) {
 
@@ -232,6 +343,7 @@ void Button::setTexture(Button::_ButtonState state) {
 	}
 
 }
+
 
 //draws button to window//
 void Button::draw(sf::RenderWindow &window) {
