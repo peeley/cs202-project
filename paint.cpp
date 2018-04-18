@@ -20,6 +20,11 @@ int main() {
 	EraserTool eraser(app.getWindow());
 	app.setTool(&dot);
 
+	//cursor
+	window.setMouseCursorVisible(false);
+	sf::Texture texture;
+    texture.loadFromFile("brushcursor.png");
+    sf::Sprite sprite(texture);
 
 	//////////make tab buttons////////////
 	vector<Button> tabs;
@@ -84,6 +89,10 @@ int main() {
 				app.cycleNextFrame();
 			}
 		}
+		
+		//cursor
+		sprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+				
 		app.drawCurrentFrame();
 
 		//////draw menus//////
@@ -105,7 +114,7 @@ int main() {
 		fileMenuBut5.setTexture(fileMenuBut5.getButtonState(window, { 273, 30 }, { 0,0 }));
 		fileMenuBut6.setTexture(fileMenuBut6.getButtonState(window, { 273, 30 }, { 0,0 }));
 		
-
+		window.draw(sprite); //for cursor
 		app.display();
 	}
 }
