@@ -2,29 +2,34 @@
 #include <vector>
 using std::vector;
 #include <queue>
+#include <iostream>
+using std::cout;
+using std::endl;
 using std::queue;
 #include "Application.hpp"
 #include "DotTool.hpp"
 #include "EraserTool.hpp"
 #include "Button.hpp"
 #include "TabMenu.hpp"
-
-
+#include "Color.hpp"
+using std::string;
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "CSPaint");
+	int width = 1080;
+	int height = 720;
+	sf::RenderWindow window(sf::VideoMode(width, height), "CSPaint");
 	window.setVerticalSyncEnabled(true);
 	//window.setFramerateLimit(120);
 	Application app(window);
-	DotTool dot(app.getWindow());
+	string brushIconFilepath = "assets/brushcursor.png";
+	DotTool dot(app.getWindow(), brushIconFilepath);
 	EraserTool eraser(app.getWindow());
 	app.setTool(&dot);
 
 	//cursor
 	window.setMouseCursorVisible(false);
-	sf::Texture cursorTexture;
-    cursorTexture.loadFromFile("brushcursor.png");
-    sf::Sprite cursorSprite(cursorTexture);
+	cout << "Loading texture to sprite" << endl;
+    sf::Sprite cursorSprite(dot.getIcon());
 
 	//////////make tab buttons////////////
 	vector<Button> tabs;

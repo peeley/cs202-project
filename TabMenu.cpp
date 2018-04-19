@@ -2,7 +2,7 @@
 TabMenu.cpp
 CS-Paint
 */
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "Button.hpp"
 #include "TabMenu.hpp"
 #include <string>

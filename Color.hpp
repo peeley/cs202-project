@@ -3,7 +3,7 @@
 // for cspaint program
 // cs202 project
 
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "Application.hpp"
 
 #ifndef FILE_COLORSELECTOR_HPP

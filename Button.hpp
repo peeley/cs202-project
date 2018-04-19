@@ -2,7 +2,7 @@
 Button.hpp
 CS-Paint
 */
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <string>
 #include<queue>
 

@@ -1,7 +1,6 @@
 // color.cpp
 // changes color of whichever tool is drawing in the window
 
-#include <SFML\Graphics.hpp>
 #include "Color.hpp"
 
 void Color::colorSelectorButton(const sf::RenderWindow &window, Application &app){
