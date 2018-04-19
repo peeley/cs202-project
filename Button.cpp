@@ -15,7 +15,7 @@ using std::queue;
 
 //constructor with no text//
 Button::Button(float width, float length, float xPos, float yPos, const string &imagePathNotPressed, const string &imagePathPressed, const std::string &imagePathHover, _ButtonType type)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }
+: _size{ width, length }, _position{ static_cast<int>(xPos), static_cast<int>(yPos) }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }
 {
 	if (!_texture.loadFromFile(_imagePathNotPressed)) //set initial button state to not pressed
 	{
@@ -32,7 +32,7 @@ Button::Button(float width, float length, float xPos, float yPos, const string &
 
 //constructor with text, but not font or font color.//
 Button::Button(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text)
-	: _size{ width, length }, _position{ xPos, yPos }, _pressed{ pressed }, _imagePathNotPressed {
+: _size{ width, length }, _position{ static_cast<int>(xPos), static_cast<int>(yPos) }, _pressed{ pressed }, _imagePathNotPressed {
 	imagePathNotPressed
 }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }
 {
@@ -56,7 +56,7 @@ Button::Button(float length, float width, float xPos, float yPos, bool pressed, 
 
 //constructor with text and font but no font color//
 Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text, const sf::Font &font)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }, _font{ font }
+: _size{ width, length }, _position{ static_cast<int>(xPos), static_cast<int>(yPos) }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{ type }, _font{ font }
 {
 
 	if (!_texture.loadFromFile(_imagePathNotPressed)) { //set initial button state to not pressed
@@ -77,7 +77,7 @@ Button::Button(float length, float width, float xPos, float yPos, const std::str
 
 //constructor with text, font, and font color//
 Button::Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text, sf::Font font, sf::Color textColor)
-	: _size{ width, length }, _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{
+: _size{ width, length }, _position{ static_cast<int>(xPos), static_cast<int>(yPos) }, _imagePathNotPressed{ imagePathNotPressed }, _imagePathPressed{ imagePathPressed }, _imagePathHover{ imagePathHover }, _type{
 	type
 }, _font{ font }
 {
@@ -355,7 +355,7 @@ void Button::draw(sf::RenderWindow &window) {
 
 //color selector button
 Button::Button(float xPos, float yPos, const std::string &imagePathNotPressed)
-	: _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }{	
+: _position{ static_cast<int>(xPos), static_cast<int>(yPos) }, _imagePathNotPressed{ imagePathNotPressed }{	
 	_pressed = false;
 	_sprite.setPosition(xPos, yPos);
 	_text.setPosition(_position.x, _position.y);
