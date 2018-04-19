@@ -28,8 +28,8 @@ int main() {
 
 	//cursor
 	window.setMouseCursorVisible(false);
-	cout << "Loading texture to sprite" << endl;
     sf::Sprite cursorSprite(dot.getIcon());
+
 
 	//////////make tab buttons////////////
 	vector<Button> tabs;
@@ -101,7 +101,12 @@ int main() {
 		}
 		
 		//cursor
-		cursorSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+		int mouseX = mousePosition.x;
+		int mouseY = mousePosition.y;
+		if((mouseX > 270 && mouseX < 1080) && (mouseY > 0 && mouseY < 720)){
+			cursorSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+		}
 				
 		app.drawCurrentFrame();
 

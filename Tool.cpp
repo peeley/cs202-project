@@ -6,7 +6,6 @@
 using std::string;
 
 Tool::Tool(sf::RenderWindow& w, string& s):_window{w}{
-	std::cout << "loading brush icon" << std::endl;
 	_mouseIcon.loadFromFile(s);
 }
 Tool::Tool(sf::RenderWindow& w): _window{w}{}
