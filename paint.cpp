@@ -105,7 +105,10 @@ int main() {
 		int mouseX = mousePosition.x;
 		int mouseY = mousePosition.y;
 		if((mouseX > 270 && mouseX < 1080) && (mouseY > 0 && mouseY < 720)){
+			window.setMouseCursorVisible(false);
 			cursorSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+		}else{
+			window.setMouseCursorVisible(true);
 		}
 				
 		app.drawCurrentFrame();
