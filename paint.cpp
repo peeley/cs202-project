@@ -38,7 +38,6 @@ int main() {
 	tabs.push_back(button3);
 	tabs.push_back(button4);
 	
-	
 	////// file menu buttons////
 	vector<Button> buttons;
 	Button fileMenuBut1( 68, 30 ,  0, 35 , false,  "button_not_pressed1.png", "button_pressed.png", "button_hover.png", Button::AUTO_TOGGLE, "New");
@@ -53,11 +52,16 @@ int main() {
 		buttons.push_back(fileMenuBut4);
 		buttons.push_back(fileMenuBut5);
 		buttons.push_back(fileMenuBut6);
-
+		
+	// color selector
+	vector<Button> colorButton;
+	Button colorSelector(850, 0, "colorselector.png");
+		colorButton.push_back(colorSelector);
+		
 	//////make menus////
 		TabMenu tabMenu({ 0,0 }, tabs, "tabHeaderBackgroundImage.png");
 		TabMenu fileMenu({ 0,0 }, buttons, "tabMenuBackgroundImage.png");
-
+		TabMenu colorMenu({850, 0}, colorButton, "colorselector.png"); // color selector
 
 	while (window.isOpen()) {
 		window.clear(sf::Color::White);
@@ -67,6 +71,7 @@ int main() {
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				app.close();
 			}
+			Color::colorSelectorButton(window, app); // color selector
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				app.getTool()->paintTick(app.getCurrentFrame(), app.getColor());
 			}
@@ -98,6 +103,7 @@ int main() {
 		//////draw menus//////
 		fileMenu.draw(window);
 		tabMenu.draw(window);
+		colorMenu.draw(window); // color selector
 		
 		///////update button textures//////////
 		//tab buttons//
