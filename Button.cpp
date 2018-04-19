@@ -355,7 +355,7 @@ void Button::draw(sf::RenderWindow &window) {
 
 //color selector button
 Button::Button(float xPos, float yPos, const std::string &imagePathNotPressed)
-	: _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }{	
+: _position{ static_cast<int>(xPos), static_cast<int>(yPos) }, _imagePathNotPressed{ imagePathNotPressed }{	
 	_pressed = false;
 	_sprite.setPosition(xPos, yPos);
 	_text.setPosition(_position.x, _position.y);
