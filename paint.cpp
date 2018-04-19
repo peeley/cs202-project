@@ -22,9 +22,9 @@ int main() {
 
 	//cursor
 	window.setMouseCursorVisible(false);
-	sf::Texture texture;
-    texture.loadFromFile("brushcursor.png");
-    sf::Sprite sprite(texture);
+	sf::Texture cursorTexture;
+    cursorTexture.loadFromFile("brushcursor.png");
+    sf::Sprite cursorSprite(cursorTexture);
 
 	//////////make tab buttons////////////
 	vector<Button> tabs;
@@ -91,7 +91,7 @@ int main() {
 		}
 		
 		//cursor
-		sprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+		cursorSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
 				
 		app.drawCurrentFrame();
 
@@ -114,7 +114,7 @@ int main() {
 		fileMenuBut5.setTexture(fileMenuBut5.getButtonState(window, { 273, 30 }, { 0,0 }));
 		fileMenuBut6.setTexture(fileMenuBut6.getButtonState(window, { 273, 30 }, { 0,0 }));
 		
-		window.draw(sprite); //for cursor
+		window.draw(cursorSprite); //for cursor
 		app.display();
 	}
 }
