@@ -1,10 +1,10 @@
+
 // color.cpp
 // changes color of whichever tool is drawing in the window
 
 #include "Color.hpp"
 
 void Color::colorSelectorButton(const sf::RenderWindow &window, Application &app){
-	sf::Color color(0, 0, 0);
 	sf::Vector2i mouse = sf::Mouse::getPosition(window);
 	sf::Vector2f mouse_world = window.mapPixelToCoords(mouse);
 	if((sf::Mouse::isButtonPressed(sf::Mouse::Left)) && (mouse_world.y >= 19 && mouse_world.y <= 23)){
@@ -42,6 +42,7 @@ void Color::colorSelectorButton(const sf::RenderWindow &window, Application &app
 }
 	
 	// this produced same results as above
+	// going the long route repeated code for the if statements
 	
 	//if(
 	//	(sf::Mouse::isButtonPressed(sf::Mouse::Left)) &&
@@ -60,7 +61,9 @@ void Color::colorSelectorButton(const sf::RenderWindow &window, Application &app
 	//		app.setColor(sf::Color::Red);
 	//	}
 	
+	
 	// this did not work at all
+	// a different kind of mouse click code
 	
 //	sf::Event event;
 //	if(event.type == sf::Event::MouseButtonPressed){
