@@ -2,7 +2,7 @@
 TabMenu.hpp
 CS-Paint
 */
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "Button.hpp"
 #include <string>
 #include <vector>
@@ -40,5 +40,4 @@ private:
 
 };
 
-
-#endif#pragma once
+#endif /*FILE_TABMENU_HPP*/
