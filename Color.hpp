@@ -7,12 +7,9 @@
 #ifndef FILE_COLORSELECTOR_HPP
 #define FILE_COLORSELECTOR_HPP
 
-class Color : public Application{
+class Color{
 public:
-	//using Application::Application;
-	//Color();
 	static void colorSelectorButton(const sf::RenderWindow &window, Application &app);
-	//static sf::Color _selectedColor;
 };
 
 #endif
