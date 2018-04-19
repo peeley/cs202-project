@@ -2,23 +2,33 @@
 #include <vector>
 using std::vector;
 #include <queue>
+#include <iostream>
+using std::cout;
+using std::endl;
 using std::queue;
 #include "Application.hpp"
 #include "DotTool.hpp"
 #include "EraserTool.hpp"
 #include "Button.hpp"
 #include "TabMenu.hpp"
-
-
+#include "Color.hpp"
+using std::string;
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "CSPaint");
+	int width = 1080;
+	int height = 720;
+	sf::RenderWindow window(sf::VideoMode(width, height), "CSPaint");
 	window.setVerticalSyncEnabled(true);
 	//window.setFramerateLimit(120);
 	Application app(window);
-	DotTool dot(app.getWindow());
+	string brushIconFilepath = "assets/brushcursor.png";
+	DotTool dot(app.getWindow(), brushIconFilepath);
 	EraserTool eraser(app.getWindow());
 	app.setTool(&dot);
+
+	//cursor
+	window.setMouseCursorVisible(false);
+    sf::Sprite cursorSprite(dot.getIcon());
 
 
 	//////////make tab buttons////////////
@@ -32,7 +42,6 @@ int main() {
 	tabs.push_back(button2);
 	tabs.push_back(button3);
 	tabs.push_back(button4);
-	
 	
 	////// file menu buttons////
 	vector<Button> buttons;
@@ -48,11 +57,16 @@ int main() {
 		buttons.push_back(fileMenuBut4);
 		buttons.push_back(fileMenuBut5);
 		buttons.push_back(fileMenuBut6);
-
+		
+	// color selector
+	vector<Button> colorButton;
+	Button colorSelector(850, 0, "colorselector.png");
+		colorButton.push_back(colorSelector);
+		
 	//////make menus////
 		TabMenu tabMenu({ 0,0 }, tabs, "tabHeaderBackgroundImage.png");
 		TabMenu fileMenu({ 0,0 }, buttons, "tabMenuBackgroundImage.png");
-
+		TabMenu colorMenu({850, 0}, colorButton, "colorselector.png"); // color selector
 
 	while (window.isOpen()) {
 		window.clear(sf::Color::White);
@@ -62,6 +76,7 @@ int main() {
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				app.close();
 			}
+			Color::colorSelectorButton(window, app); // color selector
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				app.getTool()->paintTick(app.getCurrentFrame(), app.getColor());
 			}
@@ -84,11 +99,24 @@ int main() {
 				app.cycleNextFrame();
 			}
 		}
+		
+		//cursor
+		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+		int mouseX = mousePosition.x;
+		int mouseY = mousePosition.y;
+		if((mouseX > 270 && mouseX < 1080) && (mouseY > 0 && mouseY < 720)){
+			window.setMouseCursorVisible(false);
+			cursorSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+		}else{
+			window.setMouseCursorVisible(true);
+		}
+				
 		app.drawCurrentFrame();
 
 		//////draw menus//////
 		fileMenu.draw(window);
 		tabMenu.draw(window);
+		colorMenu.draw(window); // color selector
 		
 		///////update button textures//////////
 		//tab buttons//
@@ -105,7 +133,7 @@ int main() {
 		fileMenuBut5.setTexture(fileMenuBut5.getButtonState(window, { 273, 30 }, { 0,0 }));
 		fileMenuBut6.setTexture(fileMenuBut6.getButtonState(window, { 273, 30 }, { 0,0 }));
 		
-
+		window.draw(cursorSprite); //for cursor
 		app.display();
 	}
 }

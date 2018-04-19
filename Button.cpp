@@ -351,3 +351,18 @@ void Button::draw(sf::RenderWindow &window) {
 	window.draw(_text);
 }
 
+
+
+//color selector button
+Button::Button(float xPos, float yPos, const std::string &imagePathNotPressed)
+	: _position{ xPos, yPos }, _imagePathNotPressed{ imagePathNotPressed }{	
+	_pressed = false;
+	_sprite.setPosition(xPos, yPos);
+	_text.setPosition(_position.x, _position.y);
+	_texture.setSmooth(true);
+	_sprite.setTexture(_texture);
+}
+
+
+
+

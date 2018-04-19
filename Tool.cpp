@@ -3,6 +3,11 @@
 */
 #include "Tool.hpp"
 #include <iostream>
+using std::string;
+
+Tool::Tool(sf::RenderWindow& w, string& s):_window{w}{
+	_mouseIcon.loadFromFile(s);
+}
 Tool::Tool(sf::RenderWindow& w): _window{w}{}
 
 Tool::~Tool(){
@@ -11,4 +16,8 @@ Tool::~Tool(){
 
 sf::RenderWindow& Tool::getWindow() const{
 	return _window;
+}
+
+sf::Texture& Tool::getIcon() {
+	return _mouseIcon;
 }
