@@ -1,7 +1,5 @@
 
-// colorSelector.hpp
-// for cspaint program
-// cs202 project
+// Color.hpp
 
 #include <SFML\Graphics.hpp>
 #include "Application.hpp"
@@ -16,6 +14,5 @@ public:
 	static void colorSelectorButton(const sf::RenderWindow &window, Application &app);
 	//static sf::Color _selectedColor;
 };
-
 
 #endif
