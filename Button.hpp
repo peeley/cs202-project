@@ -5,6 +5,7 @@ CS-Paint
 #include <SFML/Graphics.hpp>
 #include <string>
 #include<queue>
+#include<functional>
 
 #ifndef FILE_BUTTON_HPP
 #define FILE_BUTTON_HPP
@@ -20,16 +21,16 @@ public:
 	enum _ButtonState { PRESSED, HOVER, NOT_PRESSED };
 
 	//constructor with no text//
-	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type);
+	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f);
 
 	//constructor with text, but no font or font color (defaults to DejaVuSans and black)//
-	Button(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text);
+	Button(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text);
 
 	//constructor with text and font but no font color (defaults to black)//
-	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text, const sf::Font &font);
+	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text, const sf::Font &font);
 
 	//constructor with text, font, and font color//
-	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, const std::string &text, sf::Font font, sf::Color textColor);
+	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text, sf::Font font, sf::Color textColor);
 
 	//draws button to window//
 	void draw(sf::RenderWindow &window);
@@ -70,6 +71,7 @@ private:
 	_ButtonState _state;
 	bool _pressed;
 	int currentButtonPressed; //only used for OFF_BY_CLICK_ANOTHER buttons //maybe delete
+	std::function<void(void)> _f;
 	
 };
 
