@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 using std::vector;
 #include <queue>
@@ -30,7 +31,13 @@ int main() {
 	window.setMouseCursorVisible(false);
     sf::Sprite cursorSprite(dot.getIcon());
 
+	//music
+	sf::Music music;
+	music.openFromFile("assets/soundtrack.wav");
+	music.setLoop(true);
+	music.play();
 
+	/*
 	//////////make tab buttons////////////
 	vector<Button> tabs;
 	Button button1( 68, 30 ,  0, 0 , false,  "tab_not_pressed.png", "tab_pressed.png", "tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, " File");
@@ -67,7 +74,7 @@ int main() {
 		TabMenu tabMenu({ 0,0 }, tabs, "tabHeaderBackgroundImage.png");
 		TabMenu fileMenu({ 0,0 }, buttons, "tabMenuBackgroundImage.png");
 		TabMenu colorMenu({850, 0}, colorButton, "colorselector.png"); // color selector
-
+*/
 	while (window.isOpen()) {
 		window.clear(sf::Color::White);
 		sf::Event event;
@@ -112,7 +119,7 @@ int main() {
 		}
 				
 		app.drawCurrentFrame();
-
+/*
 		//////draw menus//////
 		fileMenu.draw(window);
 		tabMenu.draw(window);
@@ -132,7 +139,7 @@ int main() {
 		fileMenuBut4.setTexture(fileMenuBut4.getButtonState(window, { 273, 30 }, { 0,0 }));
 		fileMenuBut5.setTexture(fileMenuBut5.getButtonState(window, { 273, 30 }, { 0,0 }));
 		fileMenuBut6.setTexture(fileMenuBut6.getButtonState(window, { 273, 30 }, { 0,0 }));
-		
+*/		
 		window.draw(cursorSprite); //for cursor
 		app.display();
 	}
