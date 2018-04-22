@@ -3,7 +3,7 @@
 */
 #include "DotTool.hpp"
 #include <iostream>
-void DotTool::paintTick(Frame& f, sf::Color c) const {
+void DotTool::paintTick(Frame& f, sf::Color c) {
 	// Because Frames add Drawables to the _objects variable, for polymorphism to
 	// take effect the circle must be passed as a pointer. circle must be assigned to
 	// a 'new' CircleShape, otherwise circle is deleted when program leaves scope and
@@ -14,15 +14,21 @@ void DotTool::paintTick(Frame& f, sf::Color c) const {
 	circle->setPosition(position.x-_dotRadius, position.y-_dotRadius);
 	circle->setFillColor(c);
 	f.addObject(*circle);
-	std::cout << "Dot added at (" << position.x <<","<< position.y << ")" << std::endl;
+	// _sfxCounter prevents sound effect from replaying instantly after starting
+	if(_sfxCounter % 50 == 0){
+		this->getSoundEffect().play();
+	}
+	++_sfxCounter;
 }
 void DotTool::scrollAction(sf::Event& e){
 	if(e.mouseWheelScroll.delta < 0 && _dotRadius < 50){
 		_dotRadius += 5;
-		std::cout << "Dot size increased to: " << _dotRadius << " px." << std::endl;
 	}
 	else if(e.mouseWheelScroll.delta > 0 && _dotRadius > 5){
 		_dotRadius -= 5;
-		std::cout << "Dot size decreased to: " << _dotRadius << " px." << std::endl;
 	}
+}
+DotTool::DotTool(sf::RenderWindow& f): Tool(f){
+	this->getIcon().loadFromFile("assets/brushcursor.png");
+	this->initializeSound("assets/drawEffect.wav");
 }

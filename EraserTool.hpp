@@ -7,7 +7,7 @@
 class EraserTool : public Tool{
 	using Tool::Tool;
 	public:
-		void paintTick(Frame&, sf::Color) const override;
+		void paintTick(Frame&, sf::Color) override;
 		void scrollAction(sf::Event&) override;
 };
 #endif

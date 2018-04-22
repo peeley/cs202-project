@@ -22,8 +22,7 @@ int main() {
 	window.setVerticalSyncEnabled(true);
 	//window.setFramerateLimit(120);
 	Application app(window);
-	string brushIconFilepath = "assets/brushcursor.png";
-	DotTool dot(app.getWindow(), brushIconFilepath);
+	DotTool dot(app.getWindow());
 	EraserTool eraser(app.getWindow());
 	app.setTool(&dot);
 
@@ -35,6 +34,7 @@ int main() {
 	sf::Music music;
 	music.openFromFile("assets/soundtrack.wav");
 	music.setLoop(true);
+	music.setVolume(0);
 	music.play();
 
 	/*
@@ -67,7 +67,7 @@ int main() {
 		
 	// color selector
 	vector<Button> colorButton;
-	Button colorSelector(850, 0, "colorselector.png");
+	Button colorSelector(850, 0, "assets/colorselector.png");
 		colorButton.push_back(colorSelector);
 		
 	//////make menus////

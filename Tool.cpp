@@ -5,9 +5,6 @@
 #include <iostream>
 using std::string;
 
-Tool::Tool(sf::RenderWindow& w, string& s):_window{w}{
-	_mouseIcon.loadFromFile(s);
-}
 Tool::Tool(sf::RenderWindow& w): _window{w}{}
 
 Tool::~Tool(){
@@ -20,4 +17,11 @@ sf::RenderWindow& Tool::getWindow() const{
 
 sf::Texture& Tool::getIcon() {
 	return _mouseIcon;
+}
+sf::Sound& Tool::getSoundEffect(){
+	return _sfx;
+}
+void Tool::initializeSound(string s){
+	_sfxBuffer.loadFromFile(s);
+	_sfx.setBuffer(_sfxBuffer);	
 }

@@ -3,7 +3,7 @@
 */
 #include "EraserTool.hpp"
 #include <iostream>
-void EraserTool::paintTick(Frame& f, sf::Color c) const{
+void EraserTool::paintTick(Frame& f, sf::Color c) {
 	sf::CircleShape* circle;
 	circle = new sf::CircleShape(10);
 	sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
