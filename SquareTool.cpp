@@ -8,10 +8,7 @@ void SquareTool::paintTick(Frame& f, sf::Color c, sf::Event& e){
 		_mouseDown = true;
 	}
 	else if(e.type == sf::Event::MouseMoved && _mouseDown){
-		if(_sfxCounter % 50 == 0 ){
-			this->getSoundEffect().play();
-		}
-		++_sfxCounter;
+		this->playSound();
 	}
 	else if(e.type == sf::Event::MouseButtonReleased && e.mouseButton.button == sf::Mouse::Left){
 		sf::Vector2i endPos = sf::Mouse::getPosition(this->getWindow());
@@ -25,7 +22,6 @@ void SquareTool::paintTick(Frame& f, sf::Color c, sf::Event& e){
 		_square->setOutlineThickness(_outlineThickness);
 		f.addObject(*_square);
 		_mouseDown = false;
-		this->getSoundEffect().pause();
 	}
 }
 void SquareTool::scrollAction(sf::Event& e){

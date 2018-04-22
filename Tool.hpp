@@ -18,10 +18,12 @@ class Tool{
 		sf::Texture& getIcon();
 		sf::Sound& getSoundEffect();
 		void initializeSound(std::string);
+		void playSound();
 	private:
 		sf::RenderWindow& _window;
 		sf::Texture _mouseIcon;
 		sf::SoundBuffer _sfxBuffer;
 		sf::Sound _sfx;
+		int _sfxCounter = 0;
 };
 #endif

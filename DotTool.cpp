@@ -11,16 +11,15 @@ void DotTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
 	// take effect the circle must be passed as a pointer. circle must be assigned to
 	// a 'new' CircleShape, otherwise circle is deleted when program leaves scope and
 	// _objects has a pointer pointing to a deleted variable.
-	sf::CircleShape* circle = new sf::CircleShape(_dotRadius);
-	sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
-	circle->setPosition(position.x-_dotRadius, position.y-_dotRadius);
-	circle->setFillColor(c);
-	f.addObject(*circle);
-	// _sfxCounter prevents sound effect from replaying instantly after starting
-	if(_sfxCounter % 100 == 0){
-		this->getSoundEffect().play();
+	if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+		sf::CircleShape* circle = new sf::CircleShape(_dotRadius);
+		sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
+		circle->setPosition(position.x-_dotRadius, position.y-_dotRadius);
+		circle->setFillColor(c);
+		f.addObject(*circle);
+		// _sfxCounter prevents sound effect from replaying instantly after starting
+		this->playSound();
 	}
-	++_sfxCounter;
 }
 void DotTool::scrollAction(sf::Event& e){
 	if(e.mouseWheelScroll.delta < 0 && _dotRadius < 50){

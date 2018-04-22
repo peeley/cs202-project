@@ -12,6 +12,5 @@ class DotTool : public Tool{
 		void scrollAction(sf::Event&) override;
 	private:
 		int _dotRadius = 5;
-		int _sfxCounter = 0;
 };
 #endif

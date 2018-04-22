@@ -25,3 +25,9 @@ void Tool::initializeSound(string s){
 	_sfxBuffer.loadFromFile(s);
 	_sfx.setBuffer(_sfxBuffer);	
 }
+void Tool::playSound(){
+	if(_sfxCounter % 50 == 0){
+		_sfx.play();
+	}
+	++_sfxCounter;
+}

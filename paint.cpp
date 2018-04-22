@@ -14,6 +14,7 @@ using std::queue;
 #include "TabMenu.hpp"
 #include "Color.hpp"
 #include "SquareTool.hpp"
+#include "PencilTool.hpp"
 using std::string;
 
 int main() {
@@ -27,7 +28,8 @@ int main() {
 	DotTool dot(app.getWindow());
 	EraserTool eraser(app.getWindow());
 	SquareTool square(app.getWindow());
-	app.setTool(&square);
+	PencilTool pencil(app.getWindow());
+	app.setTool(&pencil);
 	sf::Color color = sf::Color::Red;
 
 	//cursor
@@ -127,7 +129,7 @@ int main() {
 		int mouseY = mousePosition.y;
 		if((mouseX > 270 && mouseX < 1080) && (mouseY > 0 && mouseY < 720)){
 			window.setMouseCursorVisible(false);
-			cursorSprite.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
+			cursorSprite.setPosition(mouseX, mouseY-23);
 		}else{
 			window.setMouseCursorVisible(true);
 		}

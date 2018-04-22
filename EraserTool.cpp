@@ -10,10 +10,7 @@ void EraserTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
 	circle->setPosition(position.x-10, position.y-10);
 	circle->setFillColor(c);
 	f.addObject(*circle);
-	if(_sfxCounter % 100 == 0){
-		this->getSoundEffect().play();
-	}
-	++_sfxCounter;
+	this->playSound();
 }
 void EraserTool::scrollAction(sf::Event& e){}
 EraserTool::EraserTool(sf::RenderWindow& w): Tool(w){
