@@ -10,7 +10,7 @@
 #define TOOL_HPP_
 class Tool{
 	public:
-		virtual void paintTick(Frame&, sf::Color)  = 0;
+		virtual void paintTick(Frame&, sf::Color,sf::Event& e)  = 0;
 		virtual void scrollAction(sf::Event&) = 0;
 		Tool(sf::RenderWindow&);
 		sf::RenderWindow& getWindow() const;

@@ -13,23 +13,26 @@ using std::queue;
 #include "Button.hpp"
 #include "TabMenu.hpp"
 #include "Color.hpp"
+#include "SquareTool.hpp"
 using std::string;
 
 int main() {
 	int width = 1080;
 	int height = 720;
-	int volume = 30;
+	int volume = 20;
 	sf::RenderWindow window(sf::VideoMode(width, height), "CSPaint");
 	window.setVerticalSyncEnabled(true);
 	//window.setFramerateLimit(120);
 	Application app(window);
 	DotTool dot(app.getWindow());
 	EraserTool eraser(app.getWindow());
-	app.setTool(&dot);
+	SquareTool square(app.getWindow());
+	app.setTool(&square);
+	sf::Color color = sf::Color::Red;
 
 	//cursor
 	window.setMouseCursorVisible(false);
-    sf::Sprite cursorSprite(dot.getIcon());
+    sf::Sprite cursorSprite(app.getTool()->getIcon());
 
 	//music
 	sf::Music music;
@@ -85,14 +88,16 @@ int main() {
 				app.close();
 			}
 			Color::colorSelectorButton(window, app); // color selector
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				app.getTool()->paintTick(app.getCurrentFrame(), app.getColor());
+			if (event.type == sf::Event::MouseButtonPressed || 
+				event.type == sf::Event::MouseButtonReleased ||
+				event.type == sf::Event::MouseMoved) {
+				app.getTool()->paintTick(app.getCurrentFrame(), color, event);
 			}
 			if (event.type == sf::Event::MouseWheelScrolled) {
 				app.getTool()->scrollAction(event);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-				eraser.paintTick(app.getCurrentFrame(), sf::Color::White);
+				eraser.paintTick(app.getCurrentFrame(), sf::Color::White, event);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				app.clearCurrentFrame();
@@ -114,6 +119,8 @@ int main() {
 			}
 		}
 		
+		app.drawCurrentFrame();
+		
 		//cursor
 		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 		int mouseX = mousePosition.x;
@@ -125,7 +132,6 @@ int main() {
 			window.setMouseCursorVisible(true);
 		}
 				
-		app.drawCurrentFrame();
 /*
 		//////draw menus//////
 		fileMenu.draw(window);

@@ -8,7 +8,7 @@ class DotTool : public Tool{
 	using Tool::Tool;
 	public:
 		DotTool(sf::RenderWindow&);
-		void paintTick(Frame&, sf::Color) override;
+		void paintTick(Frame&, sf::Color, sf::Event& e) override;
 		void scrollAction(sf::Event&) override;
 	private:
 		int _dotRadius = 5;
