@@ -18,6 +18,7 @@ using std::string;
 int main() {
 	int width = 1080;
 	int height = 720;
+	int volume = 30;
 	sf::RenderWindow window(sf::VideoMode(width, height), "CSPaint");
 	window.setVerticalSyncEnabled(true);
 	//window.setFramerateLimit(120);
@@ -34,7 +35,7 @@ int main() {
 	sf::Music music;
 	music.openFromFile("assets/soundtrack.wav");
 	music.setLoop(true);
-	music.setVolume(0);
+	music.setVolume(volume);
 	music.play();
 
 	/*
@@ -104,6 +105,12 @@ int main() {
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 				app.cycleNextFrame();
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
+				sf::Image screenshot;
+				app.drawCurrentFrame();
+				screenshot = window.capture();
+				screenshot.saveToFile("screenshot.jpg");
 			}
 		}
 		
