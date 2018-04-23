@@ -18,7 +18,7 @@ void DotTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
 		circle->setFillColor(c);
 		f.addObject(*circle);
 		// _sfxCounter prevents sound effect from replaying instantly after starting
-		this->playSound();
+		//this->playSound();     //////////////////////////   ///////////temp turn off link errors
 	}
 }
 void DotTool::scrollAction(sf::Event& e){
@@ -31,5 +31,5 @@ void DotTool::scrollAction(sf::Event& e){
 }
 DotTool::DotTool(sf::RenderWindow& f): Tool(f){
 	this->getIcon().loadFromFile("assets/brushcursor.png");
-	this->initializeSound("assets/drawEffect.wav");
+	//this->initializeSound("assets/drawEffect.wav");             ///////////////temp turning off link error
 }

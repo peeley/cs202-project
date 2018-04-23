@@ -7,21 +7,48 @@ UI.hpp
 #include <SFML/Graphics.hpp>
 #include "Button.hpp"
 #include "TabMenu.hpp"
+#include "Application.hpp"
 #include <string>
 #include <vector>
+#include <memory>
+
+
+
 
 #ifndef FILE_UI_HPP
 #define FILE_UI_CPP
 
 class UI {
 public:
-	UI(TabMenu menu);
+	//UI();
+	UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraser, Tool &square, Tool &pencil);
+	std::vector<TabMenu> getMenus();
 
+	//void makeButtons(Application &app, sf::RenderWindow &window);  //put in constructor
 
+	void callFunction(std::function< void() > f);
+	
+	
 	void buttonAction();
 
-private:
+	void draw(sf::RenderWindow &window);
 
+	void setButTexture(sf::RenderWindow &window);
+
+	void loadTab(sf::RenderWindow &window, Application &app);
+
+	
+
+private:
+	
+	std::vector<TabMenu> _menus;    //////////
+	std::vector<std::shared_ptr<Button>> _tabs;
+	std::vector<std::shared_ptr<Button>> _fileButtons;
+	std::vector<std::shared_ptr<Button>> _colorButtons;
+	std::vector<std::shared_ptr<Button>> _toolButtons;
+	
+	std::vector<sf::Vector2i> _menuSizes;
+	std::vector<sf::Vector2i> _menuPosition;
 
 };
 

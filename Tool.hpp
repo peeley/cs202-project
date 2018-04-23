@@ -16,14 +16,14 @@ class Tool{
 		sf::RenderWindow& getWindow() const;
 		virtual ~Tool();
 		sf::Texture& getIcon();
-		sf::Sound& getSoundEffect();
+		/*sf::Sound& getSoundEffect(); ///////////////////////////   ///////////temp turn off link errors
 		void initializeSound(std::string);
-		void playSound();
+		void playSound();*/
 	private:
 		sf::RenderWindow& _window;
 		sf::Texture _mouseIcon;
-		sf::SoundBuffer _sfxBuffer;
-		sf::Sound _sfx;
+		//sf::SoundBuffer _sfxBuffer;    ///////////temp turn off link errors
+		//sf::Sound _sfx;
 		int _sfxCounter = 0;
 };
 #endif

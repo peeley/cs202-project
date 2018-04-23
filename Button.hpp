@@ -20,20 +20,23 @@ public:
 	enum _ButtonType { AUTO_TOGGLE, CLICK_ON_CLICK_OFF, OFF_BY_CLICK_ANOTHER };
 	enum _ButtonState { PRESSED, HOVER, NOT_PRESSED };
 
+	//default constructor
+	Button();
+
 	//constructor with no text//
-	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f);
+	Button(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &imagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f);
 
 	//constructor with text, but no font or font color (defaults to DejaVuSans and black)//
 	Button(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text);
 
 	//constructor with text and font but no font color (defaults to black)//
-	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text, const sf::Font &font);
+	Button(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text, const sf::Font &font);
 
 	//constructor with text, font, and font color//
-	Button(float length, float width, float xPos, float yPos, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text, sf::Font font, sf::Color textColor);
+	Button(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text, sf::Font font, sf::Color textColor);
 
 	//draws button to window//
-	void draw(sf::RenderWindow &window);
+	void drawButton(sf::RenderWindow &window);
 
 	//getters
 	sf::Vector2i getPosition();
@@ -41,6 +44,7 @@ public:
 	sf::Text getText();
 	_ButtonState getState();
 	bool getPressed();
+
 
 	//returns button state (PRESSED, HOVER, NOT_PRESSED)//  
 	_ButtonState getButtonState(const sf::RenderWindow &window, sf::Vector2i _menuSize, sf::Vector2i _menuPosition);
@@ -56,6 +60,13 @@ public:
 
 	//color selector button
 	Button(float xPos, float yPos, const std::string &imagePathNotPressed);	
+
+	//perform button function
+	void action();
+
+	//assigns an empty button's member variables
+	void setButtonVariables(float length, float width, float xPos, float yPos, bool pressed, const std::string &imagePathNotPressed, const std::string &inmagePathPressed, const std::string &imagePathHover, _ButtonType type, std::function< void()> f, const std::string &text);
+
 
 private:
 	sf::Vector2f _size;

@@ -8,11 +8,11 @@ void EraserTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
 	circle = new sf::CircleShape(10);
 	sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
 	circle->setPosition(position.x-10, position.y-10);
-	circle->setFillColor(c);
+	circle->setFillColor(sf::Color::White);
 	f.addObject(*circle);
-	this->playSound();
+	//this->playSound();            ///////////temp turn off link errors
 }
 void EraserTool::scrollAction(sf::Event& e){}
 EraserTool::EraserTool(sf::RenderWindow& w): Tool(w){
-	this->initializeSound("assets/eraserEffect.wav");
+	//this->initializeSound("assets/eraserEffect.wav");        /////////////////////temp turning off due to link errors
 }

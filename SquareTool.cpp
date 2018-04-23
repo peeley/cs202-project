@@ -8,7 +8,7 @@ void SquareTool::paintTick(Frame& f, sf::Color c, sf::Event& e){
 		_mouseDown = true;
 	}
 	else if(e.type == sf::Event::MouseMoved && _mouseDown){
-		this->playSound();
+		//this->playSound();////////////////////////////////////   ///////////temp turn off link errors
 	}
 	else if(e.type == sf::Event::MouseButtonReleased && e.mouseButton.button == sf::Mouse::Left){
 		sf::Vector2i endPos = sf::Mouse::getPosition(this->getWindow());
@@ -35,5 +35,5 @@ void SquareTool::scrollAction(sf::Event& e){
 
 SquareTool::SquareTool(sf::RenderWindow& w): Tool(w){
 	this->getIcon().loadFromFile("assets/squareCursor.png");
-	this->initializeSound("assets/stretchEffect.wav");
+	//this->initializeSound("assets/stretchEffect.wav");        ///////////temp turn off link errors
 }

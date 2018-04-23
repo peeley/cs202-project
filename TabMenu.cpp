@@ -8,10 +8,11 @@ CS-Paint
 #include <string>
 #include <vector>
 using std::vector;
+#include <memory>
+using std::shared_ptr;
 
 
-TabMenu::TabMenu(const sf::Vector2i &position, const std::vector<Button> &buttons, const std::string &backgroundImagePath)
-	: _position{ position }, _buttons{ buttons } {
+TabMenu::TabMenu(const sf::Vector2i &position,vector<shared_ptr<Button>> &buttons, const std::string &backgroundImagePath): _position{ position }, _buttons{ buttons } {
 	_backgroundTexture.loadFromFile(backgroundImagePath);
 	_backgroundTexture.setSmooth(true);
 	_backgroundSprite.setTexture(_backgroundTexture);
@@ -22,14 +23,23 @@ TabMenu::TabMenu(const sf::Vector2i &position, const std::vector<Button> &button
 
 void TabMenu::draw(sf::RenderWindow &window) {
 	window.draw(_backgroundSprite);
-	for (auto a : _buttons) {
-		a.draw(window);
+	for (auto button = 0; button < _buttons.size(); ++button) {
+		_buttons[button]->drawButton(window);
 	}
 }
  
+int TabMenu::getMenuSize() {
+	return _buttons.size();
+}
 
 void TabMenu::setButtonTextures() {
-	for (auto a : _buttons) {
-		a.setTexture(a.getState());
+	for (auto button = 0; button < _buttons.size(); ++button) {
+		_buttons[button]->setTexture(_buttons[button]->getState());
 	}
 }
+
+//void TabMenu::getButtons(vector<shared_ptr<Button>>) {
+//	
+//	
+//	//return _buttons;
+//}
