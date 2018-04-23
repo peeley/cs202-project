@@ -57,7 +57,7 @@ int main() {
 			if (event.type == sf::Event::MouseButtonPressed || 
 				event.type == sf::Event::MouseButtonReleased ||
 				event.type == sf::Event::MouseMoved) {
-				app.getTool()->paintTick(*app.getCurrentFrame(), color, event);
+				app.getTool()->paintTick(*app.getCurrentFrame(), app.getColor(), event);
 			}
 			if (event.type == sf::Event::MouseWheelScrolled) {
 				app.getTool()->scrollAction(event);
