@@ -135,42 +135,8 @@ Button::_ButtonState Button::getButtonState(const sf::RenderWindow &window, sf::
 
 		if ((mouse_world.x > menuPosition.x && mouse_world.x < menuPosition.x + menuSize.x) &&
 			(mouse_world.y > menuPosition.y && mouse_world.y < menuPosition.y + menuSize.y)) {
-			sf::Clock clock; //////////////////////////make member variable
-			///*if (_text.getString() == "") {
-			//	if (_state == PRESSED  && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
-			//		(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
-			//		(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-			//		_pressed = false;
-			//		_state = NOT_PRESSED;
-			//	}
-			//	else if (_state == PRESSED && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
-			//		(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
-			//		(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-			//		_pressed = false;
-			//		_state = NOT_PRESSED;
-			//	}
-			//	else if (_state == (HOVER || NOT_PRESSED) && !_pressed && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
-			//		(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
-			//		(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-			//		_pressed = true;
-			//		_state = PRESSED;
-			//		delayTime(clock, 0.1);
-			//	}
-			//	else if (_state == NOT_PRESSED && !_pressed && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
-			//		(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
-			//		(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-			//		_state = HOVER;
-			//		delayTime(clock, 0.1);
-			//	}
-			//	else if (_state == HOVER && !_pressed &&
-			//		(!(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) ||
-			//			!(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y))) {
-			//		_state = NOT_PRESSED;
-			//		delayTime(clock, 0.1);
-			//	}
-			//}*/
-
-		//	else { //if there is text
+			sf::Clock clock; //////////////////////////make member variable?
+			
 
 			//turn off button if another is pressed
 			if (_state == HOVER /*&& !_pressed*/ && sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
@@ -269,34 +235,45 @@ Button::_ButtonState Button::getButtonState(const sf::RenderWindow &window, sf::
 	}
 
 	if (_type == AUTO_TOGGLE) {
+		sf::Clock clock;
 		if (_text.getString() == "") {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-				return PRESSED;
+				_state = PRESSED;
+				return _state;
+				
 			}
 			if (_state == NOT_PRESSED && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.x) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.y)) {
-				return HOVER;
+				_state = HOVER;
+				return _state;
 			}
 			else {
-				return NOT_PRESSED;
+				_state = NOT_PRESSED;
+				return _state;
+				
 			}
 		}
 		else {//if there is text
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
+				_pressed = true;
 				return PRESSED;
+				
 			}
 			if (_state == NOT_PRESSED && !sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
 				(mouse_world.x > _position.x && mouse_world.x < _position.x + _size.y) &&
 				(mouse_world.y > _position.y && mouse_world.y < _position.y + _size.x)) {
 				return HOVER;
+				
 			}
 			else {
+				_pressed = false;
 				return NOT_PRESSED;
+				
 			}
 		}
 	}

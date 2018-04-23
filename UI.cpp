@@ -40,10 +40,10 @@ UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, 
 	////// file menu buttons////
 	auto fileMenuBut1 = make_shared<Button>(68, 30, 0, 35, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "New");
 	auto fileMenuBut2 = make_shared<Button>(68, 30, 0, 70, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "Open");
-	auto fileMenuBut3 = make_shared<Button>(68, 30, 0, 105, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "Save");
+	auto fileMenuBut3 = make_shared<Button>(68, 30, 0, 105, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, [&]() { }, "Save");
 	auto fileMenuBut4 = make_shared<Button>(68, 30, 0, 140, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "Save As");
 	auto fileMenuBut5 = make_shared<Button>(68, 30, 0, 175, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "About CS-Paint");
-	auto fileMenuBut6 = make_shared<Button>(68, 30, 0, 215, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "Exit");
+	auto fileMenuBut6 = make_shared<Button>(68, 30, 0, 215, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, [&]() {app.close(); }, "Exit");
 	_fileButtons.push_back(fileMenuBut1);
 	_fileButtons.push_back(fileMenuBut2);
 	_fileButtons.push_back(fileMenuBut3);
