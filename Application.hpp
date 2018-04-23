@@ -13,9 +13,9 @@ class Application{
 		void drawCurrentFrame();
 		void cycleNextFrame();
 		void cycleLastFrame();
-		void createNewFrame();
+		void createNewFrame(int, int);
 		void addToFrame(sf::Drawable&);
-		Frame& getCurrentFrame();
+		Frame* getCurrentFrame();
 		void setColor(sf::Color);
 		sf::Color getColor();
 		Tool* getTool();
@@ -24,9 +24,11 @@ class Application{
 		void clearCurrentFrame();
 		void close();
 		void display();
-		Application(sf::RenderWindow&);
+		Application(sf::RenderWindow&, int w, int h);
+		~Application();
 	private:
-		std::vector<Frame> _frames;
+		std::vector<Frame*> _frames;
+		Frame* _framePtr;
 		int _currentFrameIndex = 0;
 		sf::Color _currentColor = sf::Color::Black;
 		sf::RenderWindow& _window;

@@ -23,9 +23,8 @@ int main() {
 	int volume = 20;
 	sf::RenderWindow window(sf::VideoMode(width, height), "CSPaint");
 	window.setVerticalSyncEnabled(true);
-	//window.setFramerateLimit(120);
-	Application app(window);
-	DotTool dot(app.getWindow());
+	Application app(window, width, height);
+	DotTool	   dot(app.getWindow());
 	EraserTool eraser(app.getWindow());
 	SquareTool square(app.getWindow());
 	PencilTool pencil(app.getWindow());
@@ -82,7 +81,6 @@ int main() {
 		TabMenu colorMenu({850, 0}, colorButton, "colorselector.png"); // color selector
 */
 	while (window.isOpen()) {
-		window.clear(sf::Color::White);
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed ||
@@ -93,19 +91,19 @@ int main() {
 			if (event.type == sf::Event::MouseButtonPressed || 
 				event.type == sf::Event::MouseButtonReleased ||
 				event.type == sf::Event::MouseMoved) {
-				app.getTool()->paintTick(app.getCurrentFrame(), color, event);
+				app.getTool()->paintTick(*app.getCurrentFrame(), color, event);
 			}
 			if (event.type == sf::Event::MouseWheelScrolled) {
 				app.getTool()->scrollAction(event);
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-				eraser.paintTick(app.getCurrentFrame(), sf::Color::White, event);
+				eraser.paintTick(*app.getCurrentFrame(), sf::Color::White, event);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				app.clearCurrentFrame();
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
-				app.createNewFrame();
+				app.createNewFrame(width, height);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				app.cycleLastFrame();
@@ -119,10 +117,10 @@ int main() {
 				screenshot = window.capture();
 				screenshot.saveToFile("screenshot.jpg");
 			}
-		}
-		
+		}	
+		window.clear(sf::Color::White);
 		app.drawCurrentFrame();
-		
+
 		//cursor
 		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 		int mouseX = mousePosition.x;
@@ -159,5 +157,3 @@ int main() {
 		app.display();
 	}
 }
-
-
