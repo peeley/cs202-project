@@ -17,6 +17,11 @@ using std::queue;
 #include "SquareTool.hpp"
 #include "PencilTool.hpp"
 using std::string;
+#include <memory>
+using std::shared_ptr;
+using std::make_shared;
+#include <vector>
+using std::vector;
 
 int main() {
 	int width = 1080;
@@ -78,10 +83,19 @@ int main() {
 				app.cycleNextFrame();
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
-				sf::Image screenshot;
+				//sf::Image screenshot;
 				app.drawCurrentFrame();
-				//screenshot = window.capture();//////////////////////////////////////////error says sf::RenderWindow::capture was declared deprecated, won't compile.
-				screenshot.saveToFile("screenshot.jpg");
+			/*	sf::RenderTexture  ss;
+				vector<shared_ptr<Frame>> curFrames;
+				auto curFrame = make_shared<shared_ptr<Frame>>;              /////////////////// Comment by Alex:  trying to figure out how to save without deprecated capture(), but getting stuck
+				curFrame->app.getCurrentFrame();                                ////////////////because getCurrentFrame() returns an old fashioned array of pointers.
+				ss.getTexture().copyToImage().saveToFile("screenshot.png");*/    //////////////I don't trust myself not to leave memory leaks if we're not using
+				                                                                 /////////////smart containers and pointers. Reading the sfml documentation, it sounds
+																					/////////the way to do it is with RenderTexture. 
+
+
+				//screenshot = window.capture();//////////////////////////////////////////error says sf::RenderWindow::capture was declared deprecated, and it won't compile.
+				//screenshot.saveToFile("screenshot.jpg");
 			}
 		}	
 		window.clear(sf::Color::White);

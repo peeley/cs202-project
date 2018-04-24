@@ -37,6 +37,8 @@ public:
 
 	void loadTab(sf::RenderWindow &window, Application &app);
 
+	void loadMenuTexture(sf::Vector2f &position, const std::string &imageFilePath, sf::RenderWindow &window);
+
 	
 
 private:
@@ -46,7 +48,8 @@ private:
 	std::vector<std::shared_ptr<Button>> _fileButtons;
 	std::vector<std::shared_ptr<Button>> _colorButtons;
 	std::vector<std::shared_ptr<Button>> _toolButtons;
-	
+	sf::Sprite _sprite;
+	sf::Texture _texture;
 	std::vector<sf::Vector2i> _menuSizes;
 	std::vector<sf::Vector2i> _menuPosition;
 

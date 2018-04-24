@@ -16,7 +16,7 @@ class TabMenu {
 public:
 	std::vector<std::shared_ptr<Button>> _buttons;
 
-	TabMenu(const sf::Vector2i &position, std::vector<std::shared_ptr<Button>> &buttons, const std::string &backgroundImagePath);
+	TabMenu(const sf::Vector2i &position, std::vector<std::shared_ptr<Button>> &buttons/*, const std::string &backgroundImagePath*/);
 	//TabMenu(const sf::Vector2i &size, const sf::Vector2i &position, const std::vector<Button> &buttons, const sf::Color &backgroundColor);
 	//TabMenu(const sf::Vector2i &size, const sf::Vector2i &position, const std::vector<Button> &buttons, const sf::Color &backgroundColor, const std::string &backgroundImagePath);
 
@@ -37,11 +37,11 @@ public:
 
 private:
 	sf::Vector2i _position;
-	sf::Color _backgroundColor;
-	std::string _backgroundImagePath;
+	//sf::Color _backgroundColor;
+	//std::string _backgroundImagePath;
 	//std::vector<std::shared_ptr<Button>> _buttons;
-	sf::Texture _backgroundTexture;
-	sf::Sprite _backgroundSprite;
+	//sf::Texture _backgroundTexture;
+	//sf::Sprite _backgroundSprite;
 
 };
 

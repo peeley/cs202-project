@@ -45,7 +45,8 @@ Button::Button(float length, float width, float xPos, float yPos, bool pressed, 
 	_texture.setSmooth(true);
 	_sprite.setTexture(_texture);
 	_sprite.setPosition(xPos, yPos);
-	_text.setPosition(_position.x + (0.4 * _size.x), _position.y + (0.09 * _size.y));
+	auto textSize = text.size();
+	_text.setPosition(_position.x + /*(length - (textSize))*/  (0.4 * _size.x), _position.y + (0.09 * _size.y));
 	_font.loadFromFile("assets/DejaVuSans.ttf");
 	_text.setFont(_font);
 	_text.setFillColor(sf::Color::Black);

@@ -29,7 +29,7 @@ UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, 
 	auto tab1 = make_shared<Button>(68, 30, 0, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "File tab pressed" << endl; }, " File");
 	auto tab2 = make_shared<Button>(68, 30, 68, 0, true, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "Home tab pressed" << endl; }, "Tools");
 	auto tab3 = make_shared<Button>(68, 30, 136, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "View tab pressed" << endl; }, "View");
-	auto tab4 = make_shared<Button>(68, 30, 204, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "Tools tab pressed" << endl; }, "Help");
+	auto tab4 = make_shared<Button>(68, 30, 204, 0, false, "assets/helpTabImage_not_pressed.png", "assets/helpTabImage_pressed.png", "assets/helpTabImage_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "Tools tab pressed" << endl; }, "Help");
 	tab2->setState(Button::PRESSED);
 	_tabs.push_back(tab1);
 	_tabs.push_back(tab2);
@@ -38,12 +38,12 @@ UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, 
 
 
 	////// file menu buttons////
-	auto fileMenuBut1 = make_shared<Button>(68, 30, 0, 35, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "New");
-	auto fileMenuBut2 = make_shared<Button>(68, 30, 0, 70, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "Open");
-	auto fileMenuBut3 = make_shared<Button>(68, 30, 0, 105, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, [&]() { }, "Save");
-	auto fileMenuBut4 = make_shared<Button>(68, 30, 0, 140, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "Save As");
-	auto fileMenuBut5 = make_shared<Button>(68, 30, 0, 175, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "About CS-Paint");
-	auto fileMenuBut6 = make_shared<Button>(68, 30, 0, 215, false, "assets/button_not_pressed1.png", "assets/button_pressed.png", "assets/button_hover.png", Button::AUTO_TOGGLE, [&]() {app.close(); }, "Exit");
+	auto fileMenuBut1 = make_shared<Button>(90, 30, 0, 35, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "  New");
+	auto fileMenuBut2 = make_shared<Button>(90, 30, 0, 70, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "  Open");
+	auto fileMenuBut3 = make_shared<Button>(90, 30, 0, 105, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, [&]() { }, "  Save");
+	auto fileMenuBut4 = make_shared<Button>(90, 30, 0, 140, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "Save As");
+	auto fileMenuBut5 = make_shared<Button>(90, 30, 0, 175, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, " About");
+	auto fileMenuBut6 = make_shared<Button>(90, 30, 0, 215, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, [&]() {app.close(); }, "   Exit");
 	_fileButtons.push_back(fileMenuBut1);
 	_fileButtons.push_back(fileMenuBut2);
 	_fileButtons.push_back(fileMenuBut3);
@@ -96,7 +96,7 @@ UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, 
 
 
 	//make tab menus////
-	TabMenu tabMenu({ 0,0 }, _tabs, "assets/tabHeaderBackgroundImage.png");
+	TabMenu tabMenu({ 0,0 }, _tabs);
 	_menus = { tabMenu };
 	_menuSizes = { {273,30} };   
 	_menuPosition = { {0,0} };								  
@@ -107,7 +107,9 @@ void UI::loadTab(sf::RenderWindow &window, Application &app) {
 	
 	///////File Tab////////
 	if (_tabs[0]->getState() == Button::PRESSED) {
-		TabMenu fileMenu({ 0,30 }, _fileButtons, "assets/tabMenuBackgroundImage.png");
+		TabMenu fileMenu({ 0,30 }, _fileButtons);
+		sf::Vector2f menuPosition = { 0,0 };
+		this->loadMenuTexture(menuPosition, "assets/tabMenuBackgroundImage.png", window);
 		if (_menus.size() < 2) {
 			_menus.push_back(fileMenu);
 			_menuSizes.push_back({ 273,720 });
@@ -129,7 +131,9 @@ void UI::loadTab(sf::RenderWindow &window, Application &app) {
 	else if (_tabs[1]->getState() == Button::PRESSED) {
 
 		//tool bar//
-		TabMenu toolMenu({ 56,110 }, _toolButtons, "assets/toolMenuBackground.png");
+		TabMenu toolMenu({ 56,110 }, _toolButtons);
+		sf::Vector2f menuPosition = { 0,0 };
+		this->loadMenuTexture(menuPosition, "assets/tabMenuBackgroundImage.png", window);
 		if (_menus.size() < 2) {
 			_menus.push_back(toolMenu);
 			_menuSizes.push_back({ 160, 80 });
@@ -142,7 +146,7 @@ void UI::loadTab(sf::RenderWindow &window, Application &app) {
 		}
 		
 		//color picker menu//
-		TabMenu colorMenu({ 36,390 }, _colorButtons, "assets/colorPickerBackground.png");
+		TabMenu colorMenu({ 36,390 }, _colorButtons/*, "assets/colorPickerBackground.png"*/);
 		if (_menus.size() < 3) {
 			_menus.push_back(colorMenu);
 			_menuSizes.push_back({ 200, 80});
@@ -166,7 +170,9 @@ void UI::loadTab(sf::RenderWindow &window, Application &app) {
 
 	/////////View Tab/////////
 	else if (_tabs[2]->getState() == Button::PRESSED) {
-		TabMenu fileMenu({ 0,30 }, _fileButtons, "assets/tabMenuBackgroundImage.png");
+		TabMenu fileMenu({ 0,30 }, _fileButtons/*, "assets/tabMenuBackgroundImage.png"*/);
+		sf::Vector2f menuPosition = { 0,0 };
+		this->loadMenuTexture(menuPosition, "assets/tabMenuBackgroundImage.png", window);
 		if (_menus.size() < 2) {
 			_menus.push_back(fileMenu);
 			_menuSizes.push_back({ 273,720 });
@@ -187,16 +193,16 @@ void UI::loadTab(sf::RenderWindow &window, Application &app) {
 
 	///////////Help Tab//////////
 	else if (_tabs[3]->getState() == Button::PRESSED) {
-		sf::Sprite help;
-		sf::Texture helpTexture;
-		if (!helpTexture.loadFromFile("assets/helpTabBackground.png")) //set initial button state to not pressed
-		{
-			// error...
-		}
-		helpTexture.setSmooth(true);
-		help.setTexture(helpTexture);
-		help.setPosition((float)0, (float)30);
-		window.draw(help);
+		sf::Vector2f menuPosition = { 0,0 };
+		this->loadMenuTexture(menuPosition, "assets/helpTabBackground.png", window);
+		//if (!_texture.loadFromFile("assets/helpTabBackground.png")) //set initial button state to not pressed
+		//{
+		//	// error...
+		//}
+		//_texture.setSmooth(true);
+		//_sprite.setTexture(_texture);
+		//_sprite.setPosition((float)0, (float)30);
+		//window.draw(_sprite);
 		while (_menus.size() > 1) {
 			_menus.pop_back();
 			_menuSizes.pop_back();
@@ -236,4 +242,17 @@ void UI::setButTexture(sf::RenderWindow &window) {
 
 		}
 	}
+}
+
+void UI::loadMenuTexture(sf::Vector2f &position, const std::string &imageFilePath, sf::RenderWindow &window) {
+	if (!_texture.loadFromFile(imageFilePath)) //set initial button state to not pressed
+	{
+		// error...
+	}
+	_texture.setSmooth(true);
+	_sprite.setTexture(_texture);
+	_sprite.setPosition((float)0, (float)30);
+	window.draw(_sprite);
+
+
 }
