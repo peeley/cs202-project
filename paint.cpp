@@ -13,7 +13,6 @@ using std::queue;
 #include "UI.hpp"
 #include "Button.hpp"
 #include "TabMenu.hpp"
-#include "Color.hpp"
 #include "SquareTool.hpp"
 #include "PencilTool.hpp"
 using std::string;
