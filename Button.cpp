@@ -354,18 +354,6 @@ void Button::setButtonVariables(float length, float width, float xPos, float yPo
 }
 
 
-
-//color selector button
-Button::Button(float xPos, float yPos, const std::string &imagePathNotPressed)
-: _position{ static_cast<int>(xPos), static_cast<int>(yPos) }, _imagePathNotPressed{ imagePathNotPressed }{	
-	_pressed = false;
-	_sprite.setPosition(xPos, yPos);
-	_text.setPosition(_position.x, _position.y);
-	_texture.setSmooth(true);
-	_sprite.setTexture(_texture);
-}
-
-
 void Button::action() {
 	_f();
 }

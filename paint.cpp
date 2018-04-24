@@ -58,7 +58,6 @@ int main() {
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				app.close();
 			}
-			Color::colorSelectorButton(window, app); // color selector
 			if (event.type == sf::Event::MouseButtonPressed || 
 				event.type == sf::Event::MouseButtonReleased ||
 				event.type == sf::Event::MouseMoved) {
