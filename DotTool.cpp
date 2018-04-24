@@ -5,7 +5,7 @@
 #include <iostream>
 #include <memory>
 using std::unique_ptr;
-using std::make_unique;
+//using std::make_unique;
 void DotTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
 	// Because Frames add Drawables to the _objects variable, for polymorphism to
 	// take effect the circle must be passed as a pointer. circle must be assigned to
