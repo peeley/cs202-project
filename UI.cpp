@@ -2,18 +2,16 @@
 Alex Lewandowski
 CS-Paint
 UI.cpp
+UI class controls the UI for this specific program it is not transportable. Tabmenu and Button classes are.
 */
 
 #include "UI.hpp"
 #include "Application.hpp"
 #include "DotTool.hpp"
 #include "EraserTool.hpp"
-#include "Tool.hpp" ////////////////////?
+#include "StraightLineTool.hpp"
 #include <vector>
 using std::vector;
-#include <iostream> ////////////////////////////////////////////remove after debugging
-using std::cout;
-using std::endl;
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
@@ -25,8 +23,8 @@ std::vector<TabMenu> UI::getMenus() {
 }
 
 //////////Constructor: makes all buttons and the main tabmenu//////////
-UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, Tool &squareTool, Tool &pencilTool) {
-	auto tab1 = make_shared<Button>(68, 30, 0, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {}, " File");
+UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, Tool &squareTool, Tool &pencilTool, Tool &sLine) {
+	auto tab1 = make_shared<Button>(68, 30, 0, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { }, " File");
 	auto tab2 = make_shared<Button>(68, 30, 68, 0, true, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { }, "Tools");
 	auto tab3 = make_shared<Button>(68, 30, 136, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { }, "View");
 	auto tab4 = make_shared<Button>(68, 30, 204, 0, false, "assets/helpTabImage_not_pressed.png", "assets/helpTabImage_pressed.png", "assets/helpTabImage_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { }, "Help");
@@ -38,11 +36,11 @@ UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, 
 
 
 	////// file menu buttons////
-	auto fileMenuBut1 = make_shared<Button>(90, 30, 0, 35, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "  New");
-	auto fileMenuBut2 = make_shared<Button>(90, 30, 0, 70, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "  Open");
+	auto fileMenuBut1 = make_shared<Button>(90, 30, 0, 35, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() { }, "  New");
+	auto fileMenuBut2 = make_shared<Button>(90, 30, 0, 70, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() { }, "  Open");
 	auto fileMenuBut3 = make_shared<Button>(90, 30, 0, 105, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, [&]() { }, "  Save");
-	auto fileMenuBut4 = make_shared<Button>(90, 30, 0, 140, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, "Save As");
-	auto fileMenuBut5 = make_shared<Button>(90, 30, 0, 175, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() {cout << "It worked!" << endl; }, " About");
+	auto fileMenuBut4 = make_shared<Button>(90, 30, 0, 140, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() { }, "Save As");
+	auto fileMenuBut5 = make_shared<Button>(90, 30, 0, 175, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() { }, " About");
 	auto fileMenuBut6 = make_shared<Button>(90, 30, 0, 215, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, [&]() {app.close(); }, "   Exit");
 	_fileButtons.push_back(fileMenuBut1);
 	_fileButtons.push_back(fileMenuBut2);
@@ -53,11 +51,11 @@ UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, 
 
 	//tool menu buttons//////																															
 	auto pencil = make_shared<Button>(40, 40, 56, 110, false, "assets/pencilIcon_not_pressed.png", "assets/pencilIcon_pressed.png", "assets/pencilIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, [&]() {app.setTool(&pencilTool); });
-	auto brush = make_shared<Button>(40, 40, 96, 110, false, "assets/brushIcon_not_pressed.png", "assets/brushIcon_pressed.png", "assets/brushIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, [&]() /*{app.setTool(&dot); }*/ {});
+	auto brush = make_shared<Button>(40, 40, 96, 110, false, "assets/brushIcon_not_pressed.png", "assets/brushIcon_pressed.png", "assets/brushIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, []{});
 	auto dotBrush = make_shared<Button>(40, 40, 136, 110, false, "assets/dotBrushIcon_not_pressed.png", "assets/dotBrushIcon_pressed.png", "assets/dotBrushIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, [&]() {app.setTool(&dot); });
-	auto squareBrush = make_shared<Button>(40, 40, 176, 110, false, "assets/squareBrushIcon_not_pressed.png", "assets/squareBrushIcon_pressed.png", "assets/squareBrushIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, [&]() { } );
-	auto fhSelector = make_shared<Button>(40, 40, 56, 150, false, "assets/fhSelectorIcon_not_pressed.png", "assets/fhSelectorIcon_pressed.png", "assets/fhSelectorIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "selector button pressed" << endl; });
-	auto selector = make_shared<Button>(40, 40, 96, 150, false, "assets/selectorIcon_not_pressed.png", "assets/selectorIcon_pressed.png", "assets/selectorIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "selector button pressed" << endl; });
+	auto squareBrush = make_shared<Button>(40, 40, 176, 110, false, "assets/sLineIcon_not_pressed.png", "assets/sLineIcon_pressed.png", "assets/sLineIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, [&]() {app.setTool(&sLine); });
+	auto fhSelector = make_shared<Button>(40, 40, 56, 150, false, "assets/fhSelectorIcon_not_pressed.png", "assets/fhSelectorIcon_pressed.png", "assets/fhSelectorIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { });
+	auto selector = make_shared<Button>(40, 40, 96, 150, false, "assets/selectorIcon_not_pressed.png", "assets/selectorIcon_pressed.png", "assets/selectorIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { });
 	auto eraser = make_shared<Button>(40, 40, 136, 150, false, "assets/eraserIcon_not_pressed.png", "assets/eraserIcon_pressed.png", "assets/eraserIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, [&]() {app.setTool(&eraserTool); }); 
 	//auto circle = make_shared<Button>(40, 40, 176, 150, false, "assets/circleIcon_not_pressed.png", "assets/circleIcon_pressed.png", "assets/circleIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "It worked!" << endl; });
 	auto square = make_shared<Button>(40, 40, 176, 150, false, "assets/squareIcon_not_pressed.png", "assets/squareIcon_pressed.png", "assets/squareIcon_hover.png", Button::OFF_BY_CLICK_ANOTHER, [&]() {app.setTool(&squareTool); });

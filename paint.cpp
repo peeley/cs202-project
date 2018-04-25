@@ -9,9 +9,9 @@ using std::endl;
 #include "UI.hpp"
 #include "Button.hpp"
 #include "TabMenu.hpp"
-#include "Color.hpp"
 #include "SquareTool.hpp"
 #include "PencilTool.hpp"
+#include "StraightLineTool.hpp"
 using std::string;
 
 int main() {
@@ -25,6 +25,7 @@ int main() {
 	EraserTool eraser(app.getWindow());
 	SquareTool square(app.getWindow());
 	PencilTool pencil(app.getWindow());
+	StraightLineTool sLine(app.getWindow());
 	app.setTool(&pencil);
 	sf::Color color = sf::Color::Red;
 
@@ -33,7 +34,7 @@ int main() {
     sf::Sprite cursorSprite(app.getTool()->getIcon());
 
 	//make UI//
-	UI ui(app, window, dot, eraser, square, pencil);
+	UI ui(app, window, dot, eraser, square, pencil, sLine);
 
 	////music
 	sf::Music music;
@@ -49,7 +50,6 @@ int main() {
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				app.close();
 			}
-			Color::colorSelectorButton(window, app); // color selector
 			if (event.type == sf::Event::MouseButtonPressed || 
 				event.type == sf::Event::MouseButtonReleased ||
 				event.type == sf::Event::MouseMoved) {

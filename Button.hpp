@@ -58,9 +58,6 @@ public:
 	//sets button texture based on pressed/not pressed status//
 	void setTexture(_ButtonState state);
 
-	//color selector button
-	Button(float xPos, float yPos, const std::string &imagePathNotPressed);	
-
 	//perform button function
 	void action();
 
