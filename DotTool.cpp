@@ -12,11 +12,11 @@ void DotTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
 	// a 'new' CircleShape, otherwise circle is deleted when program leaves scope and
 	// _objects has a pointer pointing to a deleted variable.
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-		sf::CircleShape* circle = new sf::CircleShape(_dotRadius);
+		_circle = new sf::CircleShape(_dotRadius);
 		sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
-		circle->setPosition(position.x - _dotRadius, position.y - _dotRadius);
-		circle->setFillColor(c);
-		f.addObject(*circle);
+		_circle->setPosition(position.x - _dotRadius, position.y - _dotRadius);
+		_circle->setFillColor(c);
+		f.addObject(*_circle);
 		// _sfxCounter prevents sound effect from replaying instantly after starting
 		this->playSound();     
 	}

@@ -37,7 +37,7 @@ UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, 
 	////// file menu buttons////
 	auto fileMenuBut1 = make_shared<Button>(90, 30, 0, 35, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() { }, "  New");
 	auto fileMenuBut2 = make_shared<Button>(90, 30, 0, 70, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() { }, "  Open");
-	auto fileMenuBut3 = make_shared<Button>(90, 30, 0, 105, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, [&]() { }, "  Save");
+	auto fileMenuBut3 = make_shared<Button>(90, 30, 0, 105, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, [&]() {app.save(); }, "  Save");
 	auto fileMenuBut4 = make_shared<Button>(90, 30, 0, 140, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, []() { }, "Save As");
 	auto fileMenuBut5 = make_shared<Button>(90, 30, 0, 175, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::CLICK_ON_CLICK_OFF, [&]() {sf::Vector2f v = { 0,300 }; loadMenuTexture(v, "assets/aboutPageImage.png", window); }, " About");
 	auto fileMenuBut6 = make_shared<Button>(90, 30, 0, 215, false, "assets/button_not_pressed_90.png", "assets/button_pressed_90.png", "assets/button_hover_90.png", Button::AUTO_TOGGLE, [&]() {app.close(); }, "   Exit");

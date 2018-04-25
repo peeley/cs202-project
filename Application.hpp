@@ -27,12 +27,13 @@ class Application{
 		void display();
 		Application(sf::RenderWindow&, int w, int h);
 		~Application();
+		void save();
 	private:
 		std::vector<Frame*> _frames;
-		Frame* _framePtr;
+		Frame* _framePtr = NULL;
 		int _currentFrameIndex = 0;
 		sf::Color _currentColor = sf::Color::Black;
 		sf::RenderWindow& _window;
-		Tool* _currentTool;
+		Tool* _currentTool = NULL;
 };
 #endif

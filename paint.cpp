@@ -48,6 +48,7 @@ int main() {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+				cout << "Thanks for using CSPaint!" << endl;
 				app.close();
 			}
 			if (event.type == sf::Event::MouseButtonPressed || 
@@ -74,12 +75,7 @@ int main() {
 				app.cycleNextFrame();
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
-				app.drawCurrentFrame();
-				sf::Texture screenTexture;
-				screenTexture.create(width,height);
-				screenTexture.update(window);
-				sf::Image screenshot = screenTexture.copyToImage();
-				screenshot.saveToFile("screenshot.jpg");
+				app.save();
 			}
 		}	
 		window.clear(sf::Color::White);
