@@ -21,7 +21,7 @@ UI.hpp
 class UI {
 public:
 	//UI();
-	UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraser, Tool &square, Tool &pencil);
+	UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraser, Tool &square, Tool &pencil, Tool &line);
 	std::vector<TabMenu> getMenus();
 
 	//void makeButtons(Application &app, sf::RenderWindow &window);  //put in constructor

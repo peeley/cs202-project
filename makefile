@@ -1,7 +1,7 @@
 all : paint
 
-paint : paint.o Application.o Frame.o Button.o Color.o DotTool.o Tool.o EraserTool.o TabMenu.o UI.o SquareTool.o PencilTool.o
-	g++ -o paint paint.o Application.o Frame.o Button.o Color.o DotTool.o Tool.o EraserTool.o TabMenu.o UI.o SquareTool.o PencilTool.o -lsfml-window -lsfml-system -lsfml-graphics -lsfml-audio
+paint : paint.o Application.o Frame.o Button.o Color.o DotTool.o Tool.o EraserTool.o TabMenu.o UI.o SquareTool.o PencilTool.o StraightLineTool.o
+	g++ -o paint paint.o Application.o Frame.o Button.o Color.o DotTool.o Tool.o EraserTool.o TabMenu.o UI.o SquareTool.o PencilTool.o StraightLineTool.o -lsfml-window -lsfml-system -lsfml-graphics -lsfml-audio
 
 paint.o : paint.cpp
 	g++ -c paint.cpp
@@ -38,6 +38,9 @@ SquareTool.o : SquareTool.cpp SquareTool.hpp
 
 PencilTool.o : PencilTool.cpp PencilTool.hpp
 	g++ -c PencilTool.cpp
+
+StraightLineTool.o : StraightLineTool.cpp StraightLineTool.hpp
+	g++ -c StraightLineTool.cpp
 
 clean : 
 	rm -f *.o *.gch
