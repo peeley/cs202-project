@@ -4,6 +4,7 @@
 */
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 #include "Frame.hpp"
 #include "Tool.hpp"
 #ifndef APP_HPP_

@@ -26,10 +26,10 @@ std::vector<TabMenu> UI::getMenus() {
 
 //////////Constructor: makes all buttons and the main tabmenu//////////
 UI::UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraserTool, Tool &squareTool, Tool &pencilTool) {
-	auto tab1 = make_shared<Button>(68, 30, 0, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "File tab pressed" << endl; }, " File");
-	auto tab2 = make_shared<Button>(68, 30, 68, 0, true, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "Home tab pressed" << endl; }, "Tools");
-	auto tab3 = make_shared<Button>(68, 30, 136, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "View tab pressed" << endl; }, "View");
-	auto tab4 = make_shared<Button>(68, 30, 204, 0, false, "assets/helpTabImage_not_pressed.png", "assets/helpTabImage_pressed.png", "assets/helpTabImage_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {cout << "Tools tab pressed" << endl; }, "Help");
+	auto tab1 = make_shared<Button>(68, 30, 0, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() {}, " File");
+	auto tab2 = make_shared<Button>(68, 30, 68, 0, true, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { }, "Tools");
+	auto tab3 = make_shared<Button>(68, 30, 136, 0, false, "assets/tab_not_pressed.png", "assets/tab_pressed.png", "assets/tab_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { }, "View");
+	auto tab4 = make_shared<Button>(68, 30, 204, 0, false, "assets/helpTabImage_not_pressed.png", "assets/helpTabImage_pressed.png", "assets/helpTabImage_hover.png", Button::OFF_BY_CLICK_ANOTHER, []() { }, "Help");
 	tab2->setState(Button::PRESSED);
 	_tabs.push_back(tab1);
 	_tabs.push_back(tab2);

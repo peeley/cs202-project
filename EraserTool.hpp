@@ -10,5 +10,7 @@ class EraserTool : public Tool{
 		EraserTool(sf::RenderWindow&);
 		void paintTick(Frame&, sf::Color, sf::Event&) override;
 		void scrollAction(sf::Event&) override;
+	private:
+		int _dotRadius = 10;
 };
 #endif

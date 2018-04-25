@@ -14,11 +14,11 @@ void DotTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
 		sf::CircleShape* circle = new sf::CircleShape(_dotRadius);
 		sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
-		circle->setPosition(position.x-_dotRadius, position.y-_dotRadius);
+		circle->setPosition(position.x - _dotRadius, position.y - _dotRadius);
 		circle->setFillColor(c);
 		f.addObject(*circle);
 		// _sfxCounter prevents sound effect from replaying instantly after starting
-		//this->playSound();     //////////////////////////   ///////////temp turn off link errors
+		this->playSound();     
 	}
 }
 void DotTool::scrollAction(sf::Event& e){
@@ -31,5 +31,5 @@ void DotTool::scrollAction(sf::Event& e){
 }
 DotTool::DotTool(sf::RenderWindow& f): Tool(f){
 	this->getIcon().loadFromFile("assets/brushcursor.png");
-	//this->initializeSound("assets/drawEffect.wav");             ///////////////temp turning off link error
+	this->initializeSound("assets/drawEffect.wav");
 }

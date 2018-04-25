@@ -1,12 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <vector>
-using std::vector;
-#include <queue>
 #include <iostream>
 using std::cout;
 using std::endl;
-using std::queue;
 #include "Application.hpp"
 #include "DotTool.hpp"
 #include "EraserTool.hpp"
@@ -17,11 +13,6 @@ using std::queue;
 #include "SquareTool.hpp"
 #include "PencilTool.hpp"
 using std::string;
-#include <memory>
-using std::shared_ptr;
-using std::make_shared;
-#include <vector>
-using std::vector;
 
 int main() {
 	int width = 1080;
@@ -45,11 +36,11 @@ int main() {
 	UI ui(app, window, dot, eraser, square, pencil);
 
 	////music
-	//sf::Music music;
-	//music.openFromFile("assets/soundtrack.wav"); ////////////////////////////temp turn off due to link errors
-	//music.setLoop(true);
-	//music.setVolume(volume);
-	//music.play();
+	sf::Music music;
+	music.openFromFile("assets/soundtrack.wav"); ////////////////////////////temp turn off due to link errors
+	music.setLoop(true);
+	music.setVolume(volume);
+	music.play();
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -83,25 +74,19 @@ int main() {
 				app.cycleNextFrame();
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
-				//sf::Image screenshot;
 				app.drawCurrentFrame();
-			/*	sf::RenderTexture  ss;
-				vector<shared_ptr<Frame>> curFrames;
-				auto curFrame = make_shared<shared_ptr<Frame>>;              /////////////////// Comment by Alex:  trying to figure out how to save without deprecated capture(), but getting stuck
-				curFrame->app.getCurrentFrame();                                ////////////////because getCurrentFrame() returns an old fashioned array of pointers.
-				ss.getTexture().copyToImage().saveToFile("screenshot.png");*/    //////////////I don't trust myself not to leave memory leaks if we're not using
-				                                                                 /////////////smart containers and pointers. Reading the sfml documentation, it sounds
-																					/////////the way to do it is with RenderTexture. 
-
-
-				//screenshot = window.capture();//////////////////////////////////////////error says sf::RenderWindow::capture was declared deprecated, and it won't compile.
-				//screenshot.saveToFile("screenshot.jpg");
+				sf::Texture screenTexture;
+				screenTexture.create(width,height);
+				screenTexture.update(window);
+				sf::Image screenshot = screenTexture.copyToImage();
+				screenshot.saveToFile("screenshot.jpg");
 			}
 		}	
 		window.clear(sf::Color::White);
 		app.drawCurrentFrame();
 
 		//cursor
+		cursorSprite.setTexture(app.getTool()->getIcon());
 		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 		int mouseX = mousePosition.x;
 		int mouseY = mousePosition.y;

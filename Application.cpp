@@ -7,6 +7,8 @@
 using std::cout;
 using std::endl;
 using std::vector;
+using std::make_unique;
+using std::unique_ptr;
 void Application::drawCurrentFrame(){
 	_frames[_currentFrameIndex]->drawObjects();
 }
@@ -23,8 +25,9 @@ void Application::cycleLastFrame(){
 	}
 }
 void Application::createNewFrame(int w, int h){
-	_framePtr = new Frame (this->getWindow(), w, h);
+	_framePtr = new Frame(this->getWindow(), w, h);
 	_frames.push_back(_framePtr);
+	//delete _framePtr;
 }
 void Application::setColor(sf::Color c){
 	_currentColor = c;
@@ -54,7 +57,6 @@ Frame* Application::getCurrentFrame(){
 }
 void Application::close(){
 	_window.close();
-	cout << "App exiting" << endl;
 }
 void Application::display(){
 	_window.display();
