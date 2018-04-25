@@ -38,7 +38,7 @@ int main() {
 
 	////music
 	sf::Music music;
-	music.openFromFile("assets/soundtrack.wav"); ////////////////////////////temp turn off due to link errors
+	music.openFromFile("assets/soundtrack.wav"); 
 	music.setLoop(true);
 	music.setVolume(volume);
 	music.play();
@@ -103,7 +103,7 @@ int main() {
 		ui.setButTexture(window);
 		ui.buttonAction();
 
-		window.draw(cursorSprite); //for cursor
+		window.draw(cursorSprite); 
 		app.display();
 	}
 }

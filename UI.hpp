@@ -1,7 +1,7 @@
 /*
-Alex Lewandowski
 CS-Paint
 UI.hpp
+UI class controls the UI for this specific program it is not transportable. Tabmenu and Button classes are.
 */
 
 #include <SFML/Graphics.hpp>
@@ -20,30 +20,30 @@ UI.hpp
 
 class UI {
 public:
-	//UI();
+	//constructor
 	UI(Application &app, sf::RenderWindow &window, Tool &dot, Tool &eraser, Tool &square, Tool &pencil, Tool &line);
+	
+	//returns vector of every menu in program
 	std::vector<TabMenu> getMenus();
-
-	//void makeButtons(Application &app, sf::RenderWindow &window);  //put in constructor
-
-	void callFunction(std::function< void() > f);
 	
-	
+	//check every button in menu and trigger assosiated functions for those pressed
 	void buttonAction();
 
+	//calls draw functions for each menu
 	void draw(sf::RenderWindow &window);
 
+	//calls setTexture function for every button in program
 	void setButTexture(sf::RenderWindow &window);
 
+	//loads the current selected main menu tab (File, Tools, View, Help)
 	void loadTab(sf::RenderWindow &window, Application &app);
 
+	//loads menu background texture
 	void loadMenuTexture(sf::Vector2f &position, const std::string &imageFilePath, sf::RenderWindow &window);
-
-	
 
 private:
 	
-	std::vector<TabMenu> _menus;    //////////
+	std::vector<TabMenu> _menus;   
 	std::vector<std::shared_ptr<Button>> _tabs;
 	std::vector<std::shared_ptr<Button>> _fileButtons;
 	std::vector<std::shared_ptr<Button>> _colorButtons;
