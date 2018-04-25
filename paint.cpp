@@ -15,6 +15,7 @@ using std::queue;
 #include "TabMenu.hpp"
 #include "SquareTool.hpp"
 #include "PencilTool.hpp"
+#include "StraightLineTool.hpp"
 using std::string;
 #include <memory>
 using std::shared_ptr;
@@ -33,6 +34,7 @@ int main() {
 	EraserTool eraser(app.getWindow());
 	SquareTool square(app.getWindow());
 	PencilTool pencil(app.getWindow());
+	StraightLineTool sLine(app.getWindow());
 	app.setTool(&pencil);
 	sf::Color color = sf::Color::Red;
 
@@ -41,7 +43,7 @@ int main() {
     sf::Sprite cursorSprite(app.getTool()->getIcon());
 
 	//make UI//
-	UI ui(app, window, dot, eraser, square, pencil);
+	UI ui(app, window, dot, eraser, square, pencil, sLine);
 
 	////music
 	//sf::Music music;
