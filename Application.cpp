@@ -7,8 +7,6 @@
 using std::cout;
 using std::endl;
 using std::vector;
-using std::make_unique;
-using std::unique_ptr;
 void Application::drawCurrentFrame(){
 	_frames[_currentFrameIndex]->drawObjects();
 }
@@ -27,7 +25,6 @@ void Application::cycleLastFrame(){
 void Application::createNewFrame(int w, int h){
 	_framePtr = new Frame(this->getWindow(), w, h);
 	_frames.push_back(_framePtr);
-	//delete _framePtr;
 }
 void Application::setColor(sf::Color c){
 	_currentColor = c;
@@ -60,6 +57,15 @@ void Application::close(){
 }
 void Application::display(){
 	_window.display();
+}
+void Application::save(){
+	this->drawCurrentFrame();
+	sf::Texture screenTexture;
+	auto dimensions = _window.getSize();
+	screenTexture.create(dimensions.x, dimensions.y);
+	screenTexture.update(this->getWindow());
+	sf::Image screenshot = screenTexture.copyToImage();
+	screenshot.saveToFile("screenshot.jpg");
 }
 Application::Application(sf::RenderWindow& window, int w, int h):_window{window}{
 	createNewFrame( w,  h);
