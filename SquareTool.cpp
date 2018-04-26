@@ -38,5 +38,6 @@ void SquareTool::scrollAction(sf::Event& e){
 
 SquareTool::SquareTool(sf::RenderWindow& w): Tool(w){
 	this->getIcon().loadFromFile("assets/squareCursor.png");
-	this->initializeSound("assets/stretchEffect.wav");
+	this->initializeSound("assets/creepySound15.wav");
+	//this->initializeSound("assets/stretchEffect.wav");
 }

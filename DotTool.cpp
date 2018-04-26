@@ -25,5 +25,6 @@ void DotTool::scrollAction(sf::Event& e){
 }
 DotTool::DotTool(sf::RenderWindow& f): Tool(f){
 	this->getIcon().loadFromFile("assets/brushcursor.png");
-	this->initializeSound("assets/drawEffect.wav");
+	this->initializeSound("assets/bubbles.wav");
+	//this->initializeSound("assets/drawEffect.wav");
 }
