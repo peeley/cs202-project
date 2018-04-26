@@ -43,4 +43,4 @@ StraightLineTool.o : StraightLineTool.cpp StraightLineTool.hpp
 	g++ -c StraightLineTool.cpp
 
 clean : 
-	rm -f *.o *.gch
+	rm -f *.o *.gch paint

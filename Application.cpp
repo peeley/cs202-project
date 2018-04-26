@@ -60,7 +60,7 @@ void Application::save(){
 	screenTexture.create(dimensions.x, dimensions.y);
 	screenTexture.update(this->getWindow());
 	sf::Image screenshot = screenTexture.copyToImage();
-	screenshot.saveToFile("screenshot.jpg");
+	screenshot.saveToFile("saved/screenshot.jpg");
 }
 Application::Application(sf::RenderWindow& window, int w, int h):_window{window}{
 	createNewFrame( w,  h);
