@@ -1,8 +1,8 @@
 /*
-	Frame class holds all graphical objects (shapes, textures, etc.) of current Frame.
+	Frame class is responsible for storing, displaying, or clearing current Frame.
 */
+
 #include <SFML/Graphics.hpp>
-#include <vector>
 #ifndef FRAME_HPP_
 #define FRAME_HPP_
 class Frame{
@@ -12,6 +12,7 @@ class Frame{
 		void addObject(sf::Drawable&);
 		void drawObjects();
 		sf::RenderWindow& getWindow();
+		~Frame();
 	private:
 		sf::Texture _texture;
 		sf::Sprite _sprite;

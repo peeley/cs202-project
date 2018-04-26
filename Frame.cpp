@@ -1,10 +1,8 @@
+/*
+	.cpp file for Frame class.
+*/
 
 #include "Frame.hpp"
-#include <iostream>
-
-using std::cout;
-using std::endl;
-using std::vector;
 
 Frame::Frame(sf::RenderWindow& window, int w, int h): _window{window}{
 	_texture.create(w,h);
@@ -28,3 +26,4 @@ void Frame::drawObjects(){
 sf::RenderWindow& Frame::getWindow(){
 	return _window;
 }
+Frame::~Frame(){}

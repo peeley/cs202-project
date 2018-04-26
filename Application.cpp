@@ -3,23 +3,18 @@
 */
 
 #include "Application.hpp"
-#include <iostream>
-using std::cout;
-using std::endl;
-using std::vector;
+
 void Application::drawCurrentFrame(){
 	_frames[_currentFrameIndex]->drawObjects();
 }
 void Application::cycleNextFrame(){
 	if(_currentFrameIndex < _frames.size()-1){
 		++_currentFrameIndex;
-		cout << "Cycled to next frame #" << _currentFrameIndex << endl;
 	}
 }
 void Application::cycleLastFrame(){
 	if(_currentFrameIndex > 0){
 		--_currentFrameIndex;
-		cout << "Cycled to previous frame #" << _currentFrameIndex << endl;
 	}
 }
 void Application::createNewFrame(int w, int h){
@@ -34,10 +29,10 @@ sf::Color Application::getColor(){
 	return _currentColor;
 }
 
-void Application::setTool(Tool* t){
+void Application::setTool(Tool* t){ 
 	_currentTool = t;
 }
-Tool* Application::getTool(){
+Tool* Application::getTool(){ 
 	return _currentTool;
 }
 sf::RenderWindow& Application::getWindow() const{
@@ -70,6 +65,4 @@ void Application::save(){
 Application::Application(sf::RenderWindow& window, int w, int h):_window{window}{
 	createNewFrame( w,  h);
 }
-Application::~Application(){
-	delete _framePtr;
-}
+Application::~Application(){}

@@ -1,8 +1,12 @@
+/*
+ *
+ *	Main file for CSPaint program. Initializes program, manages display, and tracks user input.
+ *
+ */
+
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <iostream>
-using std::cout;
-using std::endl;
 #include "Application.hpp"
 #include "DotTool.hpp"
 #include "EraserTool.hpp"
@@ -12,7 +16,11 @@ using std::endl;
 #include "SquareTool.hpp"
 #include "PencilTool.hpp"
 #include "StraightLineTool.hpp"
+#include <iostream>
 using std::string;
+using std::cout;
+using std::endl;
+
 
 int main() {
 	int width = 1080;

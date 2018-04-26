@@ -1,4 +1,11 @@
+/*
+ *
+ *	PencilTool creates smooth line while mouse is pressed down.
+ *
+ */
+
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include "Tool.hpp"
 class PencilTool : public Tool{
 	using Tool::Tool;
@@ -8,5 +15,5 @@ class PencilTool : public Tool{
 		PencilTool(sf::RenderWindow&);
 	private:
 		bool _mouseDown = false;
-		sf::VertexArray* _line;
+		std::unique_ptr<sf::VertexArray> _line = NULL;
 };

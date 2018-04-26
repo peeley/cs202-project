@@ -2,22 +2,16 @@
 	.cpp file for Dots class.
 */
 #include "DotTool.hpp"
-#include <iostream>
-#include <memory>
+using std::make_unique;
 using std::unique_ptr;
-//using std::make_unique;
+
 void DotTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
-	// Because Frames add Drawables to the _objects variable, for polymorphism to
-	// take effect the circle must be passed as a pointer. circle must be assigned to
-	// a 'new' CircleShape, otherwise circle is deleted when program leaves scope and
-	// _objects has a pointer pointing to a deleted variable.
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-		_circle = new sf::CircleShape(_dotRadius);
+		_circle = make_unique<sf::CircleShape>(sf::CircleShape(_dotRadius));
 		sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
 		_circle->setPosition(position.x - _dotRadius, position.y - _dotRadius);
 		_circle->setFillColor(c);
 		f.addObject(*_circle);
-		// _sfxCounter prevents sound effect from replaying instantly after starting
 		this->playSound();     
 	}
 }

@@ -4,7 +4,6 @@
 */
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <memory>
 #include "Frame.hpp"
 #include "Tool.hpp"
 #ifndef APP_HPP_
@@ -16,11 +15,11 @@ class Application{
 		void cycleLastFrame();
 		void createNewFrame(int, int);
 		void addToFrame(sf::Drawable&);
-		Frame* getCurrentFrame();
+		Frame* getCurrentFrame(); 
 		void setColor(sf::Color);
 		sf::Color getColor();
 		Tool* getTool();
-		void setTool(Tool* t);
+		void setTool(Tool*);
 		sf::RenderWindow& getWindow() const;
 		void clearCurrentFrame();
 		void close();
@@ -30,7 +29,7 @@ class Application{
 		void save();
 	private:
 		std::vector<Frame*> _frames;
-		Frame* _framePtr = NULL;
+		Frame*  _framePtr = NULL; 
 		int _currentFrameIndex = 0;
 		sf::Color _currentColor = sf::Color::Black;
 		sf::RenderWindow& _window;

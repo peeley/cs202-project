@@ -1,5 +1,11 @@
+/*
+	SquareTool creates solid square of given color of dimensions created by user's
+	click-and-drag.
+*/
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <memory>
 #include "Tool.hpp"
 
 class SquareTool : public Tool{
@@ -10,7 +16,7 @@ class SquareTool : public Tool{
 		SquareTool(sf::RenderWindow&);
 	private:
 		bool _mouseDown = false;
-		sf::RectangleShape* _square;
+		std::unique_ptr<sf::RectangleShape> _square = NULL;
 		sf::Vector2i _startPos;
 		float _outlineThickness = 10;
 };

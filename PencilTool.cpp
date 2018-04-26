@@ -1,9 +1,16 @@
+/*
+ *
+ *	.cpp file for PencilTool class.
+ *
+ */
+
 #include "PencilTool.hpp"
+using std::make_unique;
 
 void PencilTool::paintTick(Frame& f, sf::Color c, sf::Event& e){
 	if(e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left){
 		_mouseDown = true;
-		_line = new sf::VertexArray(sf::LinesStrip);
+		_line = make_unique<sf::VertexArray>(sf::VertexArray(sf::LinesStrip));
 	}
 	else if(e.type == sf::Event::MouseMoved && _mouseDown){
 		sf::Vector2f vertexPos = sf::Vector2f(sf::Mouse::getPosition(this->getWindow()));

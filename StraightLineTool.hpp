@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include "Tool.hpp"
 class StraightLineTool : public Tool{
 	using Tool::Tool;
@@ -8,5 +9,5 @@ class StraightLineTool : public Tool{
 		StraightLineTool(sf::RenderWindow&);
 	private:
 		bool _mouseDown = false;
-		sf::VertexArray* _line;
+		std::unique_ptr<sf::VertexArray> _line = NULL;
 };

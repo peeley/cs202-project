@@ -2,16 +2,16 @@
 	.cpp file for Eraser tool.
 */
 #include "EraserTool.hpp"
-#include <iostream>
+using std::make_unique;
+using std::unique_ptr;
 
 void EraserTool::paintTick(Frame& f, sf::Color c, sf::Event& e) {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-		sf::CircleShape* circle;
-		circle = new sf::CircleShape(_dotRadius);
+		_circle = make_unique<sf::CircleShape>(sf::CircleShape(_dotRadius));
 		sf::Vector2i position = sf::Mouse::getPosition(this->getWindow());
-		circle->setPosition(position.x - _dotRadius, position.y - _dotRadius);
-		circle->setFillColor(sf::Color::White);
-		f.addObject(*circle);
+		_circle->setPosition(position.x - _dotRadius, position.y - _dotRadius);
+		_circle->setFillColor(sf::Color::White);
+		f.addObject(*_circle);
 		this->playSound();            
 	}
 }

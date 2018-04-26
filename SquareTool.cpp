@@ -1,7 +1,10 @@
+/*
+	.cpp file for SquareTool class.
+*/
 #include "SquareTool.hpp"
-#include <iostream>
-using std::cout;
-using std::endl;
+using std::unique_ptr;
+using std::make_unique;
+
 void SquareTool::paintTick(Frame& f, sf::Color c, sf::Event& e){
 	if(e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left){
 		_startPos = sf::Vector2i(sf::Mouse::getPosition(this->getWindow()));
@@ -15,7 +18,7 @@ void SquareTool::paintTick(Frame& f, sf::Color c, sf::Event& e){
 		int xDist = endPos.x - _startPos.x;
 		int yDist = endPos.y - _startPos.y;
 		sf::Vector2f size(xDist, yDist);
-		_square = new sf::RectangleShape(size);
+		_square = make_unique<sf::RectangleShape>(sf::RectangleShape(size));
 		_square->setOutlineColor(c);
 		_square->setFillColor(c);
 		_square->setPosition(sf::Vector2f(_startPos));
